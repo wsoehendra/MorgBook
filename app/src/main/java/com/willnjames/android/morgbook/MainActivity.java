@@ -3,6 +3,11 @@ package com.willnjames.android.morgbook;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.willnjames.android.morgbook.Database.DatabaseAccess;
+import com.willnjames.android.morgbook.Model.Person;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -10,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        DatabaseAccess dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+        dbAccess.testGetStudents();
+        dbAccess.close();
     }
 }
