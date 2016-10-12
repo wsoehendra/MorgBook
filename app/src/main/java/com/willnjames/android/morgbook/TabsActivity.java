@@ -30,6 +30,7 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
 
         setContentView( R.layout.tabs );
 
+
         tab0 = (Button) findViewById(R.id.tab0);
         tab1 = (Button) findViewById(R.id.tab1);
         tab2 = (Button) findViewById(R.id.tab2);
