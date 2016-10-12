@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:layout_width="0dip"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="0.2">
 
@@ -23,44 +23,53 @@
                 android:visibility="gone" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
-                <Button
+                <ImageButton
                     android:id="@+id/tab0"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="0dip"
                     android:layout_weight="1.0"
-                    android:background="@color/colorPrimary">
+                    android:background="@null"
+                    android:src="@drawable/dashboardicon"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp">
                 <requestFocus />
 
-                </Button>
+                </ImageButton>
 
-                <Button
+                <ImageButton
                     android:id="@+id/tab1"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dip"
                     android:layout_weight="1.0"
                     android:background="@color/colorPrimary"
-                     />
+                    android:src="@drawable/attendanceicon"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/tab2"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dip"
                     android:layout_weight="1.0"
                     android:background="@color/colorPrimary"
-                     />
+                    android:src="@drawable/progressicon"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/tab3"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dip"
                     android:layout_weight="1.0"
                     android:background="@color/colorPrimary"
-                    />
+                    android:src="@drawable/meetingsicon"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
             </LinearLayout>
         </FrameLayout>
 

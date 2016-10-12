@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.dashboard_activity);
 
-        loginButton = (Button) findViewById(R.id.button4);
+        /*loginButton = (Button) findViewById(R.id.button4);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
     }
 }

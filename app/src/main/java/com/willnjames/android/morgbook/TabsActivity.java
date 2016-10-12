@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TabHost;
 
 /**
@@ -12,13 +13,13 @@ import android.widget.TabHost;
  */
 public class TabsActivity extends android.app.TabActivity implements View.OnClickListener {
 
-    private Button tab0;
-    private Button tab1;
-    private Button tab2;
-    private Button tab3;
+    private ImageButton tab0;
+    private ImageButton tab1;
+    private ImageButton tab2;
+    private ImageButton tab3;
 
-    private Button[] btn = new Button[4];
-    private Button btn_unfocus;
+    private ImageButton[] btn = new ImageButton[4];
+    private ImageButton btn_unfocus;
     private int[] btn_id = {R.id.tab0, R.id.tab1, R.id.tab2, R.id.tab3};
 
     private TabHost tabHost;
@@ -31,10 +32,10 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
         setContentView( R.layout.tabs );
 
 
-        tab0 = (Button) findViewById(R.id.tab0);
-        tab1 = (Button) findViewById(R.id.tab1);
-        tab2 = (Button) findViewById(R.id.tab2);
-        tab3 = (Button) findViewById(R.id.tab3);
+        tab0 = (ImageButton) findViewById(R.id.tab0);
+        tab1 = (ImageButton) findViewById(R.id.tab1);
+        tab2 = (ImageButton) findViewById(R.id.tab2);
+        tab3 = (ImageButton) findViewById(R.id.tab3);
 
         tabHost = getTabHost();
 
@@ -45,8 +46,8 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
         tabHost.setCurrentTab(0);
 
         for(int i = 0; i < btn.length; i++){
-            btn[i] = (Button) findViewById(btn_id[i]);
-            btn[i].setBackgroundColor(Color.parseColor("#3F51B5"));
+            btn[i] = (ImageButton) findViewById(btn_id[i]);
+            //btn[i].setBackgroundColor(Color.parseColor("#3F51B5"));
             btn[i].setOnClickListener(this);
         }
 
@@ -99,13 +100,13 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
         }
     }
 
-    private void setFocus(Button btn_unfocus, Button btn_focus){
-        btn_unfocus.setBackgroundColor(Color.parseColor("#3F51B5"));
-        btn_focus.setBackgroundColor(Color.parseColor("#303F9F"));
+    private void setFocus(ImageButton btn_unfocus, ImageButton btn_focus){
+        btn_unfocus.setBackgroundColor(Color.parseColor("#FFC107"));
+        btn_focus.setBackgroundColor(Color.parseColor("#e6ac00"));
     }
 
-    private void initFocus(Button btn_unfocus){
-        btn_unfocus.setBackgroundColor(Color.parseColor("#303F9F"));
+    private void initFocus(ImageButton btn_unfocus){
+        btn_unfocus.setBackgroundColor(Color.parseColor("#e6ac00"));
     }
 
 }
