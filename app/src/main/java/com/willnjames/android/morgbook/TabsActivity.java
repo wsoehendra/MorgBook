@@ -15,10 +15,11 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
     private Button tab0;
     private Button tab1;
     private Button tab2;
+    private Button tab3;
 
-    private Button[] btn = new Button[3];
+    private Button[] btn = new Button[4];
     private Button btn_unfocus;
-    private int[] btn_id = {R.id.tab0, R.id.tab1, R.id.tab2};
+    private int[] btn_id = {R.id.tab0, R.id.tab1, R.id.tab2, R.id.tab3};
 
     private TabHost tabHost;
 
@@ -31,13 +32,15 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
 
         tab0 = (Button) findViewById(R.id.tab0);
         tab1 = (Button) findViewById(R.id.tab1);
-        tab2 = (Button) findViewById(R.id.tab1);
+        tab2 = (Button) findViewById(R.id.tab2);
+        tab3 = (Button) findViewById(R.id.tab3);
 
         tabHost = getTabHost();
 
         tabHost.addTab(tabHost.newTabSpec("first").setIndicator("First").setContent(new Intent(this  ,DashboardActivity.class )));
         tabHost.addTab(tabHost.newTabSpec("second").setIndicator("Second").setContent(new Intent(this  ,AttendanceActivity.class )));
         tabHost.addTab(tabHost.newTabSpec("third").setIndicator("Third").setContent(new Intent(this  ,SecondActivity.class )));
+        tabHost.addTab(tabHost.newTabSpec("fourth").setIndicator("Fourth").setContent(new Intent(this  ,SecondActivity.class )));
         tabHost.setCurrentTab(0);
 
         for(int i = 0; i < btn.length; i++){
@@ -62,6 +65,7 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
         tab0.setSelected(false);
         tab1.setSelected(false);
         tab2.setSelected(false);
+        tab3.setSelected(false);
 
         switch (v.getId()){
             case R.id.tab0 :
@@ -83,6 +87,13 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
                 btn_unfocus = btn[2];
                 tabHost.setCurrentTab(2);
                 tab2.setSelected(true);
+                break;
+
+            case R.id.tab3 :
+                setFocus(btn_unfocus, btn[3]);
+                btn_unfocus = btn[3];
+                tabHost.setCurrentTab(3);
+                tab3.setSelected(true);
                 break;
         }
     }
