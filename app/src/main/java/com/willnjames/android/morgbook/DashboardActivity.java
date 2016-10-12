@@ -13,6 +13,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.willnjames.android.morgbook.Model.ProgressBarAnimation;
+
 import java.util.Random;
 
 /**

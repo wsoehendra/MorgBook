@@ -1,4 +1,4 @@
-package com.willnjames.android.morgbook;
+package com.willnjames.android.morgbook.Model;
 
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
