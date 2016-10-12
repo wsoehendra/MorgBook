@@ -21,6 +21,5 @@ public class SecondActivity extends Activity {
 
         textClock = (TextClock) findViewById(R.id.textClock2);
 
-
     }
 }

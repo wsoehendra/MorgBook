@@ -41,7 +41,7 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
 
         tabHost.addTab(tabHost.newTabSpec("first").setIndicator("First").setContent(new Intent(this  ,DashboardActivity.class )));
         tabHost.addTab(tabHost.newTabSpec("second").setIndicator("Second").setContent(new Intent(this  ,AttendanceActivity.class )));
-        tabHost.addTab(tabHost.newTabSpec("third").setIndicator("Third").setContent(new Intent(this  ,SecondActivity.class )));
+        tabHost.addTab(tabHost.newTabSpec("third").setIndicator("Third").setContent(new Intent(this  ,BasicActivity.class )));
         tabHost.addTab(tabHost.newTabSpec("fourth").setIndicator("Fourth").setContent(new Intent(this  ,SecondActivity.class )));
         tabHost.setCurrentTab(0);
 

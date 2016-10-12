@@ -29,6 +29,7 @@ dependencies {
     //SQLiteAssetHelper by Jeff Gilfelt
     //From https://github.com/jgilfelt/android-sqlite-asset-helper
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
 
     testCompile 'junit:junit:4.12'
 }
