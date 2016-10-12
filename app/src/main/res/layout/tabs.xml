@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/tabhost"
+    android:background="#808080"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/tab0"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary">
+                <requestFocus />
+
+                </Button>
+
+                <Button
+                    android:id="@+id/tab1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                     />
+
+                <Button
+                    android:id="@+id/tab2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                     />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.88" />
+
+    </LinearLayout>
+</TabHost>

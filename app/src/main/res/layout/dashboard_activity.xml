@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#808080"
+    tools:context="com.willnjames.android.morgbook.MainActivity">
+
+    <ProgressBar
+        android:id="@+id/circularProgressbar"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="false"
+        android:max="100"
+        android:secondaryProgress="100"
+        android:progressDrawable="@drawable/circleprogress"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/button"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/circularProgressbar"
+        android:layout_marginTop="32dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Random"
+        android:id="@+id/button2"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max"
+        android:id="@+id/button3"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
+
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="100"
+        android:gravity="right"
+        android:textColor="#00FF00"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="@+id/circularProgressbar"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft= "60dp"/>
+
+    <TextView
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Attendance"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="@+id/circularProgressbar"
+        android:layout_marginTop="145dp"
+        android:layout_marginLeft= "75dp"/>
+
+    <TextView
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="%"
+        android:gravity="right"
+        android:textColor="#00FF00"
+        android:textStyle="bold"
+        android:textSize="50dp"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="@+id/circularProgressbar"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft= "153dp"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:enabled="false"
+        android:progressDrawable="@drawable/progress"
+        android:thumb="@drawable/thumb"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/circularProgressbar"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="This is Week #"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/seekBar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/button"
+        android:layout_above="@+id/seekBar"
+        android:layout_alignTop="@+id/button"
+        android:layout_alignParentEnd="true">
+
+        <TableLayout
+            android:id="@+id/table_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+        </TableLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
