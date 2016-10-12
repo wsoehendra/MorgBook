@@ -61,4 +61,20 @@ public class DatabaseAccess {
         return studentsList;
     }
 
+    public ArrayList<String> getStudentNamesAttendance(){
+        ArrayList<String> studentsList = new ArrayList<String>();
+        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME",null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            String fName = cursor.getString(1);
+            String lName = cursor.getString(2);
+            String fullName = lName.toUpperCase()+", "+fName;
+            studentsList.add(fullName);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.d("QUERYTEST", studentsList.toString());
+        return studentsList;
+    }
+
 }

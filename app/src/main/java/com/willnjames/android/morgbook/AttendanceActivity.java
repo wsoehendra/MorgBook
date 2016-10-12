@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.willnjames.android.morgbook.Database.DatabaseAccess;
+
+import java.util.ArrayList;
 
 /**
  * Created by jamesprijatna on 7/10/16.
@@ -18,6 +23,7 @@ public class AttendanceActivity extends Activity {
 
     private TextView[] txt = new TextView[13];
     private Button[] btn = new Button[12];
+    DatabaseAccess dbAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +31,6 @@ public class AttendanceActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.attendance_activity);
-
         initialise();
     }
 
@@ -54,11 +59,16 @@ public class AttendanceActivity extends Activity {
                 new TableLayout.LayoutParams
                         (TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
 
-        for (int i = 0; i < 12; i++) {
+        dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+        ArrayList<String> studentNames = dbAccess.getStudentNamesAttendance();
+        dbAccess.close();
+
+        for (int i = 0; i < studentNames.size(); i++) {
             TableRow tableRow = new TableRow(this);
 
             TextView nameText = new TextView(this);
-            nameText.setText("Name #"+i);
+            nameText.setText(studentNames.get(i));
             nameText.setGravity(Gravity.LEFT);
             tableRow.addView(nameText);
 
