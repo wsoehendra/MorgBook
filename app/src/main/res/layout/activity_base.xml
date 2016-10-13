@@ -9,8 +9,9 @@
 
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/button7"
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:eventTextColor="@android:color/white"
@@ -24,5 +25,29 @@
         app:textSize="12sp"
         app:todayBackgroundColor="#1848adff"
         app:todayHeaderTextColor="@color/colorPrimaryDark" />
+
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/button6" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/button6"
+        android:visibility="invisible"
+        android:id="@+id/button7" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/listView"
+        android:layout_below="@+id/button6"
+        android:layout_alignStart="@+id/button7" />
 
 </RelativeLayout>

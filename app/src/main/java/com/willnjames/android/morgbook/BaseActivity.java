@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -27,11 +29,19 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
 
+    private ListView list;
+
+    private String[] elements = new String[]{"-all-", "Fire", "Water", "Grass", "Poison", "Electric", "Ghost", "Fighting", "Bug", "Dragon", "Ice", "Ground", "Normal", "Psychic", "Flying"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        list = (ListView) findViewById(R.id.listView);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elements);
+        list.setAdapter(adapter);
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);

@@ -93,6 +93,7 @@ public class AttendanceActivity extends Activity {
         return new View.OnClickListener() {
             int counter = 1;
             public void onClick(View v) {
+
                 if(counter==1) {
                     v.getBackground().setColorFilter(Color.parseColor("#FF00FF"), PorterDuff.Mode.MULTIPLY);
                     counter++;
