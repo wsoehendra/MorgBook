@@ -70,6 +70,39 @@
                     android:src="@drawable/meetingsicon"
                     android:scaleType="fitCenter"
                     android:padding="20dp" />
+
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                    android:visibility="invisible"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                    android:visibility="invisible"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                    android:visibility="invisible"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
+                <ImageButton
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@color/colorPrimary"
+                    android:visibility="invisible"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp" />
             </LinearLayout>
         </FrameLayout>
 
