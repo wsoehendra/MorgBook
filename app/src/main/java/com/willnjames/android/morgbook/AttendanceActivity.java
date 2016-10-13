@@ -13,6 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
+import com.willnjames.android.morgbook.Model.Person;
 
 import java.util.ArrayList;
 
@@ -46,9 +47,9 @@ public class AttendanceActivity extends Activity {
         for(int i = 1; i < txt.length; i++){
             txt[i] = new TextView(this);
             txt[i].setText("W"+i);
-            txt[i].setTextColor(Color.WHITE);
+            txt[i].setTextColor(Color.BLACK);
             txt[i].setTextSize(20);
-            txt[i].setGravity(Gravity.RIGHT);
+            txt[i].setGravity(Gravity.CENTER);
             txt[i].setPadding(9,2,9,2);
             weekLabel.addView(txt[i]);
         }
@@ -61,14 +62,19 @@ public class AttendanceActivity extends Activity {
 
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
-        ArrayList<String> studentNames = dbAccess.getStudentNamesAttendance();
+        ArrayList<Person> studentsList = dbAccess.testGetStudents();
+        if(studentsList == null){
+            Log.d("Query", "List is null");
+        }
+
         dbAccess.close();
 
-        for (int i = 0; i < studentNames.size(); i++) {
+        for (int i = 0; i < studentsList.size(); i++) {
             TableRow tableRow = new TableRow(this);
-
+            int studentID = studentsList.get(i).getZ_ID();
             TextView nameText = new TextView(this);
-            nameText.setText(studentNames.get(i));
+            String fullName = studentsList.get(i).getLName().toUpperCase()+", "+studentsList.get(i).getFName();
+            nameText.setText(fullName);
             nameText.setGravity(Gravity.LEFT);
             tableRow.addView(nameText);
 
@@ -77,7 +83,7 @@ public class AttendanceActivity extends Activity {
                 btn[j].setId(View.generateViewId());
                 btn[j].setGravity(Gravity.CENTER);
                 btn[j].setLayoutParams(new TableRow.LayoutParams(110, 110));
-                btn[j].setOnClickListener(doSomething(btn[j]));
+                btn[j].setOnClickListener(doSomething(btn[j], studentID));
                 tableRow.addView(btn[j]);
             }
 
@@ -89,19 +95,20 @@ public class AttendanceActivity extends Activity {
 
     }
 
-    View.OnClickListener doSomething(final Button button)  {
+    View.OnClickListener doSomething(final Button button, final int studentID)  {
         return new View.OnClickListener() {
             int counter = 1;
             public void onClick(View v) {
-                if(counter==1) {
+                Log.d("Row id", String.valueOf(studentID));
+                if(counter==1) {    //Student is present
                     v.getBackground().setColorFilter(Color.parseColor("#FF00FF"), PorterDuff.Mode.MULTIPLY);
                     counter++;
                 }
-                else if(counter==2){
+                else if(counter==2){    //Student is absent
                     v.getBackground().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
                     counter++;
                 }
-                else if(counter==3){
+                else if(counter==3){    //Student is absent with explanation
                     v.getBackground().setColorFilter(Color.parseColor("#0000FF"), PorterDuff.Mode.MULTIPLY);
                     counter++;
                 }

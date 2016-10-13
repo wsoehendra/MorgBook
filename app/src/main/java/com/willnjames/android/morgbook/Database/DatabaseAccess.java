@@ -45,7 +45,7 @@ public class DatabaseAccess {
 
     public ArrayList<Person> testGetStudents(){
         ArrayList<Person> studentsList = new ArrayList<Person>();
-        Cursor cursor  = database.rawQuery("SELECT * FROM PERSONS", null);
+        Cursor cursor  = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME", null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             Person p = new Person();
