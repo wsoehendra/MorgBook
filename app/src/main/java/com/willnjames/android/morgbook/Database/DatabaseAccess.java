@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Person;
 
 import java.util.ArrayList;
@@ -43,38 +44,42 @@ public class DatabaseAccess {
         }
     }
 
-    public ArrayList<Person> testGetStudents(){
+    public ArrayList<Person> getStudents(){
         ArrayList<Person> studentsList = new ArrayList<Person>();
         Cursor cursor  = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME", null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            Person p = new Person();
-            p.setZ_ID(cursor.getInt(0));
-            p.setFName(cursor.getString(1));
-            p.setLName(cursor.getString(2));
-            p.setRole(cursor.getString(3));
+            Person p = new Person(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3)
+            );
             studentsList.add(p);
             cursor.moveToNext();
         }
         cursor.close();
-        Log.d("TEST QUERY",studentsList.toString());
+        Log.d("QUERY|GET", "List of Students: "+studentsList.toString());
         return studentsList;
     }
 
-    public ArrayList<String> getStudentNamesAttendance(){
-        ArrayList<String> studentsList = new ArrayList<String>();
-        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME",null);
+    public ArrayList<Attendance> getAttendance(){
+        ArrayList<Attendance> attendanceList = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE",null);
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            String fName = cursor.getString(1);
-            String lName = cursor.getString(2);
-            String fullName = lName.toUpperCase()+", "+fName;
-            studentsList.add(fullName);
+            Attendance a = new Attendance(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getInt(2),
+                    cursor.getString(3)
+            );
+            attendanceList.add(a);
             cursor.moveToNext();
         }
         cursor.close();
-        Log.d("QUERYTEST", studentsList.toString());
-        return studentsList;
+        Log.d("QUERY|GET", "All Attendance: "+attendanceList.toString());
+        return attendanceList;
     }
 
 }

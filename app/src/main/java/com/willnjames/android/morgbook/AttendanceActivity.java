@@ -13,6 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
+import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Person;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class AttendanceActivity extends Activity {
         initialise();
     }
 
+    //Create and setup the Attendance table
     public void initialise() {
         TableLayout tableLayout = (TableLayout) findViewById(R.id.table_main);
         TableRow weekLabel = new TableRow(this);
@@ -62,7 +64,7 @@ public class AttendanceActivity extends Activity {
 
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
-        ArrayList<Person> studentsList = dbAccess.testGetStudents();
+        ArrayList<Person> studentsList = dbAccess.getStudents();
         if(studentsList == null){
             Log.d("Query", "List is null");
         }
@@ -79,11 +81,12 @@ public class AttendanceActivity extends Activity {
             tableRow.addView(nameText);
 
             for(int j = 0; j < btn.length; j++){
+                int weekNo = j+1;
                 btn[j] = new Button(this);
                 btn[j].setId(View.generateViewId());
                 btn[j].setGravity(Gravity.CENTER);
                 btn[j].setLayoutParams(new TableRow.LayoutParams(110, 110));
-                btn[j].setOnClickListener(doSomething(btn[j], studentID));
+                btn[j].setOnClickListener(doSomething(btn[j], studentID, weekNo));
                 tableRow.addView(btn[j]);
             }
 
@@ -95,11 +98,14 @@ public class AttendanceActivity extends Activity {
 
     }
 
-    View.OnClickListener doSomething(final Button button, final int studentID)  {
+    //Populate the Attendance table with existing records
+    //some method here
+
+    View.OnClickListener doSomething(final Button button, final int studentID, final int weekNo)  {
         return new View.OnClickListener() {
             int counter = 1;
             public void onClick(View v) {
-                Log.d("Row id", String.valueOf(studentID));
+                Log.d("Attendance|Click", "Student: "+studentID+" Week: "+weekNo+"\n");
                 if(counter==1) {    //Student is present
                     v.getBackground().setColorFilter(Color.parseColor("#FF00FF"), PorterDuff.Mode.MULTIPLY);
                     counter++;
