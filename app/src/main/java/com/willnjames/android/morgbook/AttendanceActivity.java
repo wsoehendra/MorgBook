@@ -16,7 +16,10 @@ import com.willnjames.android.morgbook.Database.DatabaseAccess;
 import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Person;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by jamesprijatna on 7/10/16.
@@ -27,6 +30,8 @@ public class AttendanceActivity extends Activity {
     private Button[] btn = new Button[12];
     DatabaseAccess dbAccess;
 
+    private TextView dateText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -34,6 +39,22 @@ public class AttendanceActivity extends Activity {
 
         setContentView(R.layout.attendance_activity);
         initialise();
+
+        dateText = (TextView) findViewById(R.id.dateText);
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
+        Date dd = new Date();
+        String month = sdm.format(dd);
+
+        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+
+        dateText.setText(sDate);
     }
 
     //Create and setup the Attendance table
@@ -52,7 +73,7 @@ public class AttendanceActivity extends Activity {
             txt[i].setTextColor(Color.BLACK);
             txt[i].setTextSize(20);
             txt[i].setGravity(Gravity.CENTER);
-            txt[i].setPadding(9,2,9,2);
+            txt[i].setPadding(60,2,9,2);
             weekLabel.addView(txt[i]);
         }
 
@@ -77,7 +98,9 @@ public class AttendanceActivity extends Activity {
             TextView nameText = new TextView(this);
             String fullName = studentsList.get(i).getLName().toUpperCase()+", "+studentsList.get(i).getFName();
             nameText.setText(fullName);
+            nameText.setTextSize(17);
             nameText.setGravity(Gravity.LEFT);
+            nameText.setPadding(25,0,80,0);
             tableRow.addView(nameText);
 
             for(int j = 0; j < btn.length; j++){
@@ -85,7 +108,7 @@ public class AttendanceActivity extends Activity {
                 btn[j] = new Button(this);
                 btn[j].setId(View.generateViewId());
                 btn[j].setGravity(Gravity.CENTER);
-                btn[j].setLayoutParams(new TableRow.LayoutParams(110, 110));
+                btn[j].setLayoutParams(new TableRow.LayoutParams(155, 155));
                 btn[j].setOnClickListener(doSomething(btn[j], studentID, weekNo));
                 tableRow.addView(btn[j]);
             }

@@ -4,33 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#fafafa"
     tools:context=".BaseActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:src="@drawable/rectangledark"
+        android:id="@+id/topImage" />
+
+    <TextView
+        android:text="Meeting Schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="27dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/textView3" />
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:layout_marginTop="5dp"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textClock"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="17dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateText"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17dp"
+        android:layout_below="@+id/textClock"
+        android:layout_alignEnd="@+id/textClock"
+        android:layout_marginEnd="3dp" />
 
     <com.alamkanak.weekview.WeekView
         android:id="@+id/weekView"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/button7"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topImage"
+        android:layout_toLeftOf="@+id/button8"
+        android:layout_marginTop="50dp"
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:eventTextColor="@android:color/white"
         app:headerColumnBackground="#ffffffff"
         app:headerColumnPadding="8dp"
         app:headerColumnTextColor="@color/colorPrimary"
-        app:headerRowBackgroundColor="@color/colorAccent"
+        app:headerRowBackgroundColor="@color/colorSecondary"
         app:headerRowPadding="12dp"
         app:hourHeight="60dp"
         app:noOfVisibleDays="7"
         app:textSize="12sp"
         app:todayBackgroundColor="#1848adff"
-        app:todayHeaderTextColor="@color/colorPrimaryDark" />
+        app:todayHeaderTextColor="@color/colorSecondary" />
 
 
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="New Meeting"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:textSize="11dp"
+        android:background="@drawable/rectangledark"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/topImage"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="12dp"
         android:layout_alignParentEnd="true"
         android:id="@+id/button6" />
 
@@ -42,12 +90,38 @@
         android:visibility="invisible"
         android:id="@+id/button7" />
 
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/button7"
+        android:visibility="invisible"
+        android:id="@+id/button8" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/button8"
+        android:visibility="invisible"
+        android:id="@+id/button9" />
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:id="@+id/listView"
         android:layout_below="@+id/button6"
-        android:layout_alignStart="@+id/button7" />
+        android:layout_marginTop="20dp"
+        android:layout_alignStart="@+id/button8" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"
+        android:id="@+id/button10" />
 
 </RelativeLayout>

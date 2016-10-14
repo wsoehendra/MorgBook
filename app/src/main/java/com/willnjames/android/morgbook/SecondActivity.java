@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextClock;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -16,6 +21,8 @@ public class SecondActivity extends Activity {
     private TextClock textClock;
     private Button popup;
 
+    private TextView dateText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -25,6 +32,22 @@ public class SecondActivity extends Activity {
 
         textClock = (TextClock) findViewById(R.id.textClock2);
         popup = (Button) findViewById(R.id.popup);
+        dateText = (TextView) findViewById(R.id.dateText);
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
+        Date dd = new Date();
+        String month = sdm.format(dd);
+
+        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+
+        dateText.setText(sDate);
+
 
         popup.setOnClickListener(new View.OnClickListener() {
             @Override

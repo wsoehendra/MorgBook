@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -17,6 +18,7 @@ import com.alamkanak.weekview.WeekViewEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -31,6 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
     private ListView list;
 
+    private TextView dateText;
+
     private String[] elements = new String[]{"-all-", "Fire", "Water", "Grass", "Poison", "Electric", "Ghost", "Fighting", "Bug", "Dragon", "Ice", "Ground", "Normal", "Psychic", "Flying"};
 
     @Override
@@ -39,6 +43,22 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
         setContentView(R.layout.activity_base);
 
         list = (ListView) findViewById(R.id.listView);
+
+        dateText = (TextView) findViewById(R.id.dateText);
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
+        Date dd = new Date();
+        String month = sdm.format(dd);
+
+        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+
+        dateText.setText(sDate);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elements);
         list.setAdapter(adapter);
@@ -58,6 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
         // Set long press listener for empty view
         mWeekView.setEmptyViewLongPressListener(this);
+
+        mWeekView.goToHour(Calendar.HOUR_OF_DAY);
 
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
@@ -144,7 +166,7 @@ public abstract class BaseActivity extends AppCompatActivity implements WeekView
 
             @Override
             public String interpretTime(int hour) {
-                return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
+                return hour > 11 ? (hour - 12) + " PM" : (hour == 12 ? "12 AM" : hour + " AM");
             }
         });
     }

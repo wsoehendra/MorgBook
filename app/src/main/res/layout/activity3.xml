@@ -7,15 +7,74 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#808080"
+    android:background="#fafafa"
     tools:context="com.willnjames.android.morgbook.MainActivity">
 
 
-    <TimePicker
+    <TextView
+        android:text="Student:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="183dp"
-        android:id="@+id/timePicker" />
+        android:layout_marginTop="25dp"
+        android:id="@+id/studentMeetingLabel" />
+
+    <TextView
+        android:text="Location: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentMeetingLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/locationMeetingLabel" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location"
+        android:layout_alignBottom="@+id/locationMeetingLabel"
+        android:layout_alignEnd="@+id/studentIdSpinner"
+        android:layout_alignTop="@+id/locationMeetingLabel"
+        android:layout_alignStart="@+id/studentIdSpinner" />
+
+    <Spinner
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/studentIdSpinner"
+        android:layout_marginStart="44dp"
+        android:layout_alignTop="@+id/studentMeetingLabel"
+        android:layout_toEndOf="@+id/locationMeetingLabel" />
+
+    <TextView
+        android:text="Date: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locationMeetingLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/dateMeetingLabel" />
+
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateMeetingPicker"
+        android:layout_alignStart="@+id/location"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/location"
+        android:layout_alignBottom="@+id/timeMeetingLabel" />
+
+
+    <TextView
+        android:text="Time: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateMeetingLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/timeMeetingLabel" />
+
+
+
 </RelativeLayout>

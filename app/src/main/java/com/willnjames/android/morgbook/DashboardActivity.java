@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import com.willnjames.android.morgbook.Model.ProgressBarAnimation;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
+
+import static com.willnjames.android.morgbook.R.id.dateText;
 
 /**
  * Created by jamesprijatna on 5/10/16.
@@ -36,6 +41,8 @@ public class DashboardActivity extends Activity {
     private int circleProgressValue;
     private int seekBarProgressValue;
 
+    private TextView dateText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,22 @@ public class DashboardActivity extends Activity {
 
         textView = (TextView) findViewById(R.id.textView);
         weekText = (TextView) findViewById(R.id.textView4);
+
+        dateText = (TextView) findViewById(R.id.dateText);
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
+        Date dd = new Date();
+        String month = sdm.format(dd);
+
+        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+
+        dateText.setText(sDate);
 
         circularProgress.setMax(10000);
         seekBar.setEnabled(false);
@@ -143,7 +166,6 @@ public class DashboardActivity extends Activity {
             }
         });
 
-        init();
     }
 
     private void startCountAnimation(int from, int to) {
@@ -158,87 +180,5 @@ public class DashboardActivity extends Activity {
             }
         });
         animator.start();
-    }
-
-
-    // Code taken from StackOverFlow user Aby Mathew @: http://stackoverflow.com/a/22682248
-    public void init() {
-        TableLayout layout = (TableLayout) findViewById(R.id.table_main);
-        TableRow tableRow = new TableRow(this);
-        TextView idText = new TextView(this);
-        idText.setText("ID");
-        idText.setTextColor(Color.WHITE);
-        tableRow.addView(idText);
-        TextView nameText = new TextView(this);
-        nameText.setText("Name");
-        nameText.setTextColor(Color.WHITE);
-        tableRow.addView(nameText);
-        TextView locationText = new TextView(this);
-        locationText.setText("Location");
-        locationText.setTextColor(Color.WHITE);
-        tableRow.addView(locationText);
-        TextView timeText = new TextView(this);
-        timeText.setText("Time");
-        timeText.setTextColor(Color.WHITE);
-        tableRow.addView(timeText);
-        layout.addView(tableRow);
-
-        idText.setPadding(9,2,9,2);
-        nameText.setPadding(9,2,9,2);
-        locationText.setPadding(9,2,9,2);
-        timeText.setPadding(9,2,9,2);
-
-        idText.setTextSize(20);
-        nameText.setTextSize(20);
-        locationText.setTextSize(20);
-        timeText.setTextSize(20);
-
-        idText.setBackground(getDrawable(R.drawable.bordertop));
-        nameText.setBackground(getDrawable(R.drawable.bordertop));
-        locationText.setBackground(getDrawable(R.drawable.bordertop));
-        timeText.setBackground(getDrawable(R.drawable.bordertop));
-
-
-        for (int i = 0; i < 6; i++) {
-            TableRow entryRow = new TableRow(this);
-            TextView idEntry = new TextView(this);
-            idEntry.setText("" + i);
-            idEntry.setTextColor(Color.WHITE);
-            idEntry.setGravity(Gravity.CENTER);
-            entryRow.addView(idEntry);
-            TextView nameEntry = new TextView(this);
-            nameEntry.setText("Name " + i);
-            nameEntry.setTextColor(Color.WHITE);
-            nameEntry.setGravity(Gravity.CENTER);
-            entryRow.addView(nameEntry);
-            TextView locationEntry = new TextView(this);
-            locationEntry.setText("Rm." + i);
-            locationEntry.setTextColor(Color.WHITE);
-            locationEntry.setGravity(Gravity.CENTER);
-            entryRow.addView(locationEntry);
-            TextView timeEntry = new TextView(this);
-            timeEntry.setText("" + i * 15 / 32 * 10+":00");
-            timeEntry.setTextColor(Color.WHITE);
-            timeEntry.setGravity(Gravity.CENTER);
-            entryRow.addView(timeEntry);
-            layout.addView(entryRow);
-
-
-            idEntry.setPadding(9,2,9,2);
-            nameEntry.setPadding(9,2,9,2);
-            locationEntry.setPadding(9,2,9,2);
-            timeEntry.setPadding(9,2,9,2);
-
-            idEntry.setTextSize(15);
-            nameEntry.setTextSize(15);
-            locationEntry.setTextSize(15);
-            timeEntry.setTextSize(15);
-
-            idEntry.setBackground(getDrawable(R.drawable.border));
-            nameEntry.setBackground(getDrawable(R.drawable.border));
-            locationEntry.setBackground(getDrawable(R.drawable.border));
-            timeEntry.setBackground(getDrawable(R.drawable.border));
-
-        }
     }
 }
