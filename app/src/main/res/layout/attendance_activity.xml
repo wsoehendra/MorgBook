@@ -7,32 +7,16 @@
     android:background="#ededed"
     tools:context="com.willnjames.android.morgbook.MainActivity">
 
-    <TextView
-        android:text="Attendance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topImage"
-        android:background="@drawable/rectangle"
-        android:textColor="@color/colorSecondary"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:id="@+id/attendanceLabel" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/rectanglewhite"
-        android:layout_below="@+id/attendanceLabel"
+        android:layout_below="@+id/topImage"
         android:id="@+id/progressBG"/>
 
     <ScrollView
@@ -40,8 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@+id/topImage"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="35dp"
         android:layout_marginBottom="35dp">
 
             <RelativeLayout
@@ -63,7 +48,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="81dp"
         android:src="@drawable/rectangledark"
         android:id="@+id/topImage" />
 

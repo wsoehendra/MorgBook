@@ -71,9 +71,9 @@ public class AttendanceActivity extends Activity {
             txt[i] = new TextView(this);
             txt[i].setText("W"+i);
             txt[i].setTextColor(Color.BLACK);
-            txt[i].setTextSize(20);
+            txt[i].setTextSize(18);
             txt[i].setGravity(Gravity.CENTER);
-            txt[i].setPadding(60,2,9,2);
+            txt[i].setPadding(45,2,9,2);
             weekLabel.addView(txt[i]);
         }
 
@@ -108,7 +108,7 @@ public class AttendanceActivity extends Activity {
                 btn[j] = new Button(this);
                 btn[j].setId(View.generateViewId());
                 btn[j].setGravity(Gravity.CENTER);
-                btn[j].setLayoutParams(new TableRow.LayoutParams(155, 155));
+                btn[j].setLayoutParams(new TableRow.LayoutParams(115, 115));
                 btn[j].setOnClickListener(doSomething(btn[j], studentID, weekNo));
                 tableRow.addView(btn[j]);
             }

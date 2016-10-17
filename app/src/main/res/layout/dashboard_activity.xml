@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="81dp"
         android:src="@drawable/rectangledark"
         android:id="@+id/topImage" />
 
@@ -67,7 +67,7 @@
         android:id="@+id/attendanceLabel" />
 
     <TextView
-        android:text="Something"
+        android:text="Course Progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/topImage"
@@ -80,9 +80,9 @@
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="320dp"
+        android:layout_marginStart="260dp"
         android:layout_marginTop="30dp"
-        android:id="@+id/somethingLabel" />
+        android:id="@+id/weekLabel" />
 
     <TextView
         android:text="Reminders"
@@ -98,7 +98,7 @@
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="610dp"
+        android:layout_marginStart="490dp"
         android:layout_marginTop="30dp"
         android:id="@+id/reminderLabel" />
 
@@ -116,7 +116,7 @@
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="610dp"
+        android:layout_marginStart="490dp"
         android:layout_marginTop="300dp"
         android:id="@+id/assignmentsLabel" />
 
@@ -134,12 +134,12 @@
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="910dp"
+        android:layout_marginStart="720dp"
         android:layout_marginTop="30dp"
         android:id="@+id/meetingsLabel" />
 
     <ImageView
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="340dp"
         android:layout_marginStart="30dp"
         android:src="@drawable/rectanglewhite"
@@ -147,41 +147,41 @@
         android:id="@+id/progressBG"/>
 
     <ImageView
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="340dp"
-        android:layout_marginStart="320dp"
+        android:layout_marginStart="260dp"
         android:src="@drawable/rectanglewhite"
-        android:layout_below="@+id/somethingLabel"
-        android:id="@+id/somethingBG"/>
+        android:layout_below="@+id/weekLabel"
+        android:id="@+id/weekBG"/>
 
     <ImageView
-        android:layout_width="260dp"
+        android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginStart="610dp"
+        android:layout_marginStart="490dp"
         android:src="@drawable/rectanglewhite"
-        android:layout_below="@+id/somethingLabel"
+        android:layout_below="@+id/weekLabel"
         android:id="@+id/remindersBG"/>
 
     <ImageView
-        android:layout_width="260dp"
+        android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginStart="610dp"
+        android:layout_marginStart="490dp"
         android:src="@drawable/rectanglewhite"
         android:layout_below="@+id/assignmentsLabel"
         android:id="@+id/assignmentsBG"/>
 
     <ImageView
-        android:layout_width="270dp"
+        android:layout_width="210dp"
         android:layout_height="470dp"
-        android:layout_marginStart="910dp"
+        android:layout_marginStart="720dp"
         android:src="@drawable/rectanglewhite"
         android:layout_below="@+id/meetingsLabel"
         android:id="@+id/meetingsBG"/>
 
     <ProgressBar
         android:id="@+id/circularProgressbar"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginStart="30dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:indeterminate="false"
@@ -190,6 +190,18 @@
         android:progressDrawable="@drawable/circleprogress"
         android:layout_below="@+id/attendanceLabel"
         android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        android:id="@+id/weeklyProgress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="false"
+        android:max="100"
+        android:secondaryProgress="100"
+        android:progressDrawable="@drawable/circleprogress"
+        android:layout_below="@+id/weekLabel"
+        android:layout_alignStart="@+id/weekBG" />
 
 
     <TextView
@@ -200,12 +212,12 @@
         android:gravity="right"
         android:textColor="#00FF00"
         android:textStyle="bold"
-        android:textSize="50dp"
-        android:id="@+id/textView"
+        android:textSize="45dp"
+        android:id="@+id/attendanceText"
         android:layout_below="@+id/attendanceLabel"
         android:layout_alignParentStart="@+id/circularProgressbar"
-        android:layout_marginTop="92dp"
-        android:layout_marginLeft= "90dp"/>
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft= "60dp"/>
 
     <TextView
         android:layout_width="35dp"
@@ -215,12 +227,42 @@
         android:gravity="right"
         android:textColor="#00FF00"
         android:textStyle="bold"
-        android:textSize="50dp"
+        android:textSize="45dp"
         android:id="@+id/textView2"
         android:layout_below="@+id/attendanceLabel"
-        android:layout_alignParentStart="@+id/circularProgressbar"
-        android:layout_marginTop="92dp"
-        android:layout_marginLeft= "183dp"/>
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft= "150dp"/>
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=" - "
+        android:gravity="left"
+        android:textColor="#00FF00"
+        android:textStyle="bold"
+        android:textSize="45dp"
+        android:id="@+id/weekText"
+        android:layout_below="@+id/weekLabel"
+        android:layout_alignStart="@+id/weeklyProgress"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft= "95dp"/>
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="W"
+        android:gravity="left"
+        android:textColor="#00FF00"
+        android:textStyle="bold"
+        android:textSize="45dp"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/weekLabel"
+        android:layout_alignStart="@+id/weeklyProgress"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft= "55dp"/>
 
     <TextView
         android:text="##"
@@ -272,38 +314,6 @@
         android:layout_marginEnd="52dp"
         android:layout_marginBottom="10dp" />
 
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/seekBar"
-        android:enabled="false"
-        android:progressDrawable="@drawable/progress"
-        android:thumb="@drawable/thumb"
-        android:layout_marginBottom="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/meetingsBG"
-        android:layout_alignStart="@+id/progressBG" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="This is Week #"
-        android:id="@+id/textView4"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_alignStart="@+id/seekBar"
-        android:layout_marginStart="20dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Random"
-        android:id="@+id/button2"
-        android:layout_alignBaseline="@+id/button"
-        android:layout_alignBottom="@+id/button"
-        android:layout_toEndOf="@+id/button" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -314,18 +324,8 @@
         android:layout_toEndOf="@+id/button2" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reset"
-        android:id="@+id/button"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_toEndOf="@+id/somethingLabel"
-        android:layout_marginStart="89dp" />
-
-    <Button
-        android:text="New Meeting"
-        android:layout_width="100dp"
+        android:text="New"
+        android:layout_width="45dp"
         android:layout_height="30dp"
         android:textSize="11dp"
         android:background="@drawable/rectangledark"
@@ -347,6 +347,25 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Random"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/weekLabel"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/resetButton"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_toStartOf="@+id/button2" />
 
 
 </RelativeLayout>

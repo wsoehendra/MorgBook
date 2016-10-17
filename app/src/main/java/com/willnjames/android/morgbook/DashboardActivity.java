@@ -2,15 +2,10 @@ package com.willnjames.android.morgbook;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.willnjames.android.morgbook.Model.ProgressBarAnimation;
@@ -20,26 +15,25 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-import static com.willnjames.android.morgbook.R.id.dateText;
-
 /**
  * Created by jamesprijatna on 5/10/16.
  */
 public class DashboardActivity extends Activity {
 
-    private ProgressBar circularProgress;
+    private ProgressBar attendanceProgressBar;
+    private ProgressBar weekProgressBar;
     private Button reset;
     private Button random;
     private Button full;
-    private ProgressBarAnimation anim;
-    private ProgressBarAnimation anim2;
+    private ProgressBarAnimation attendanceAnimation;
+    private ProgressBarAnimation weekAnimation;
 
-    private TextView weekText;
-    private TextView textView;
-    private SeekBar seekBar;
+    private TextView attendanceTextCount;
+    private TextView weekTextCount;
 
-    private int circleProgressValue;
-    private int seekBarProgressValue;
+    private int attendanceProgressValue;
+    private int weekProgressValue;
+
 
     private TextView dateText;
 
@@ -49,18 +43,17 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        circleProgressValue = 0;
-        seekBarProgressValue = 0;
+        attendanceProgressValue = 0;
+        weekProgressValue = 0;
 
-        circularProgress = (ProgressBar) findViewById(R.id.circularProgressbar);
-        reset = (Button) findViewById(R.id.button);
+        attendanceProgressBar = (ProgressBar) findViewById(R.id.circularProgressbar);
+        weekProgressBar = (ProgressBar) findViewById(R.id.weeklyProgress);
+        reset = (Button) findViewById(R.id.resetButton);
         random = (Button) findViewById(R.id.button2);
         full = (Button) findViewById(R.id.button3);
 
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-
-        textView = (TextView) findViewById(R.id.textView);
-        weekText = (TextView) findViewById(R.id.textView4);
+        attendanceTextCount = (TextView) findViewById(R.id.attendanceText);
+        weekTextCount = (TextView) findViewById(R.id.weekText);
 
         dateText = (TextView) findViewById(R.id.dateText);
 
@@ -78,32 +71,31 @@ public class DashboardActivity extends Activity {
 
         dateText.setText(sDate);
 
-        circularProgress.setMax(10000);
-        seekBar.setEnabled(false);
-        seekBar.setMax(1200);
+        attendanceProgressBar.setMax(10000);
+        weekProgressBar.setMax(1200);
 
-        textView.setText("0");
+        attendanceTextCount.setText("0");
+        weekTextCount.setText("0");
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                circleProgressValue = circularProgress.getProgress();
-                seekBarProgressValue = seekBar.getProgress();
+                attendanceProgressValue = attendanceProgressBar.getProgress();
+                weekProgressValue = weekProgressBar.getProgress();
 
-                anim = new ProgressBarAnimation(circularProgress, circleProgressValue, 0);
-                anim.setDuration(1000);
-                circularProgress.startAnimation(anim);
+                attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, 0);
+                attendanceAnimation.setDuration(1000);
+                attendanceProgressBar.startAnimation(attendanceAnimation);
 
-                circleProgressValue = circleProgressValue / 100;
+                weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, 0);
+                weekAnimation.setDuration(1000);
+                weekProgressBar.startAnimation(weekAnimation);
 
-                startCountAnimation(circleProgressValue, 0);
-                seekBar.setProgress(0);
+                attendanceProgressValue = attendanceProgressValue / 100;
+                weekProgressValue = weekProgressValue / 100;
 
-                weekText.setText("This is Week #");
-
-                anim2 = new ProgressBarAnimation(seekBar, seekBarProgressValue, 0);
-                anim2.setDuration(1000);
-                seekBar.startAnimation(anim2);
+                startAttendanceAnimation(attendanceProgressValue, 0);
+                startWeekAnimation(weekProgressValue, 0);
 
 
             }
@@ -112,31 +104,32 @@ public class DashboardActivity extends Activity {
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                circleProgressValue = circularProgress.getProgress();
-                seekBarProgressValue = seekBar.getProgress();
+                attendanceProgressValue = attendanceProgressBar.getProgress();
+                weekProgressValue = weekProgressBar.getProgress();
 
                 Random a = new Random();
                 int b = a.nextInt(101);
                 int c = b*100;
 
-                anim = new ProgressBarAnimation(circularProgress, circleProgressValue, c);
-                anim.setDuration(1000);
-                circularProgress.startAnimation(anim);
+                attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, c);
+                attendanceAnimation.setDuration(1000);
+                attendanceProgressBar.startAnimation(attendanceAnimation);
 
-                circleProgressValue = circleProgressValue / 100;
+                attendanceProgressValue = attendanceProgressValue / 100;
 
-                startCountAnimation(circleProgressValue, b);
+                startAttendanceAnimation(attendanceProgressValue, b);
 
                 Random r = new Random();
                 int j = r.nextInt(13);
                 int m = j*100;
 
-                seekBar.setProgress(j);
-                weekText.setText("This is Week "+j);
+                weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, m);
+                weekAnimation.setDuration(1000);
+                weekProgressBar.startAnimation(weekAnimation);
 
-                anim2 = new ProgressBarAnimation(seekBar, seekBarProgressValue, m);
-                anim2.setDuration(1000);
-                seekBar.startAnimation(anim2);
+                weekProgressValue = weekProgressValue / 100;
+
+                startWeekAnimation(weekProgressValue, j);
 
             }
         });
@@ -144,38 +137,52 @@ public class DashboardActivity extends Activity {
         full.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                circleProgressValue = circularProgress.getProgress();
-                seekBarProgressValue = seekBar.getProgress();
+                attendanceProgressValue = attendanceProgressBar.getProgress();
+                weekProgressValue = weekProgressBar.getProgress();
 
-                anim = new ProgressBarAnimation(circularProgress, circleProgressValue, 10000);
-                anim.setDuration(1000);
-                circularProgress.startAnimation(anim);
+                attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, 10000);
+                attendanceAnimation.setDuration(1000);
+                attendanceProgressBar.startAnimation(attendanceAnimation);
 
-                circleProgressValue = circleProgressValue / 100;
+                attendanceProgressValue = attendanceProgressValue / 100;
 
-                startCountAnimation(circleProgressValue, 100);
-                seekBar.setProgress(0);
+                startAttendanceAnimation(attendanceProgressValue, 100);
 
-                weekText.setText("This is Week 12");
+                weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, 1200);
+                weekAnimation.setDuration(1000);
+                weekProgressBar.startAnimation(weekAnimation);
 
-                anim2 = new ProgressBarAnimation(seekBar, seekBarProgressValue, 1200);
-                anim2.setDuration(1000);
-                seekBar.startAnimation(anim2);
+                weekProgressValue = weekProgressValue / 100;
 
+                startWeekAnimation(weekProgressValue, 12);
 
             }
         });
 
     }
 
-    private void startCountAnimation(int from, int to) {
+    private void startAttendanceAnimation(int from, int to) {
         ValueAnimator animator = new ValueAnimator();
         animator.setObjectValues(from, to);
 
         animator.setDuration(1000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
-                textView.setText("" + (int) animation.getAnimatedValue());
+                attendanceTextCount.setText("" + (int) animation.getAnimatedValue());
+
+            }
+        });
+        animator.start();
+    }
+
+    private void startWeekAnimation(int from, int to) {
+        ValueAnimator animator = new ValueAnimator();
+        animator.setObjectValues(from, to);
+
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                weekTextCount.setText("" + (int) animation.getAnimatedValue());
 
             }
         });

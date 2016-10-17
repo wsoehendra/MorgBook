@@ -30,85 +30,85 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:background="@color/colorPrimary"
                     android:visibility="invisible"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
 
                 <ImageButton
                     android:id="@+id/tab0"
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:background="@null"
                     android:src="@drawable/dashboardicon"
                     android:scaleType="fitCenter"
-                    android:padding="20dp">
+                    android:padding="15dp">
                 <requestFocus />
 
                 </ImageButton>
 
                 <ImageButton
                     android:id="@+id/tab1"
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:background="@color/colorPrimary"
                     android:src="@drawable/attendanceicon"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
 
                 <ImageButton
                     android:id="@+id/tab2"
-                    android:layout_width="75dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:background="@color/colorPrimary"
-                    android:src="@drawable/progressicon"
-                    android:scaleType="fitCenter"
-                    android:padding="20dp" />
-
-                <ImageButton
-                    android:id="@+id/tab3"
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:background="@color/colorPrimary"
                     android:src="@drawable/meetingsicon"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
 
                 <ImageButton
-                    android:layout_width="75dp"
+                    android:id="@+id/tab3"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
-                    android:visibility="invisible"
+                    android:background="@color/colorPrimary"
+                    android:src="@drawable/progressicon"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
+
                 <ImageButton
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:visibility="invisible"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
                 <ImageButton
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:visibility="invisible"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
                 <ImageButton
-                    android:layout_width="75dp"
+                    android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:visibility="invisible"
                     android:scaleType="fitCenter"
-                    android:padding="20dp" />
+                    android:padding="15dp" />
+                <ImageButton
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:visibility="invisible"
+                    android:scaleType="fitCenter"
+                    android:padding="15dp" />
             </LinearLayout>
         </FrameLayout>
 
