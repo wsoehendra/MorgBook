@@ -28,7 +28,7 @@ public class TabsActivity extends android.app.TabActivity implements View.OnClic
 
         super.onCreate(savedInstanceState);
 
-        setContentView( R.layout.tabs );
+        setContentView( R.layout.tabs_activity);
 
 
         tab0 = (ImageButton) findViewById(R.id.tab0);

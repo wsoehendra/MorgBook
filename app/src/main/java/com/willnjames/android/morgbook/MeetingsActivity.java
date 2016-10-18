@@ -6,8 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +13,8 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,20 +31,19 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
 
-    private ListView list;
 
     private TextView dateText;
 
-    private String[] elements = new String[]{"-all-", "Fire", "Water", "Grass", "Poison", "Electric", "Ghost", "Fighting", "Bug", "Dragon", "Ice", "Ground", "Normal", "Psychic", "Flying"};
+    private TextView testLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
-
-        list = (ListView) findViewById(R.id.listView);
+        setContentView(R.layout.meetings_activity);
 
         dateText = (TextView) findViewById(R.id.dateText);
+
+        testLabel = (TextView) findViewById(R.id.textView);
 
         Calendar c = Calendar.getInstance();
 
@@ -59,9 +58,6 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
         String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
 
         dateText.setText(sDate);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elements);
-        list.setAdapter(adapter);
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
@@ -178,16 +174,21 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        testLabel.setText(event.getName());
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        testLabel.setText(event.getName());
+
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
         Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+        testLabel.setText(getEventTitle(time));
+
     }
 
     public WeekView getWeekView() {
