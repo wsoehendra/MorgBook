@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name=".BasicActivity"
+            android:name=".EventsActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation|screenSize">

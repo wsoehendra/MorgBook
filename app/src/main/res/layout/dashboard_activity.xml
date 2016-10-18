@@ -337,15 +337,15 @@
         android:id="@+id/createMeetingButton" />
 
     <ListView
+        android:id="@+id/meetingsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/createMeetingButton"
         android:layout_alignEnd="@+id/meetingsBG"
         android:layout_alignStart="@+id/meetingsBG"
         android:layout_alignBottom="@+id/meetingsBG"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp" />
 
     <Button

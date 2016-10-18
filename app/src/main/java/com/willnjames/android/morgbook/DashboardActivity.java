@@ -4,13 +4,17 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.willnjames.android.morgbook.Model.Meeting;
 import com.willnjames.android.morgbook.Model.ProgressBarAnimation;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -34,14 +38,19 @@ public class DashboardActivity extends Activity {
     private int attendanceProgressValue;
     private int weekProgressValue;
 
+    private ListView meetingList;
 
     private TextView dateText;
+
+    private ArrayList<Meeting> meetingItems;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
+
+        meetingItems = new ArrayList<>();
 
         attendanceProgressValue = 0;
         weekProgressValue = 0;
@@ -56,6 +65,8 @@ public class DashboardActivity extends Activity {
         weekTextCount = (TextView) findViewById(R.id.weekText);
 
         dateText = (TextView) findViewById(R.id.dateText);
+
+        meetingList = (ListView) findViewById(R.id.meetingsList);
 
         Calendar c = Calendar.getInstance();
 
@@ -76,6 +87,19 @@ public class DashboardActivity extends Activity {
 
         attendanceTextCount.setText("0");
         weekTextCount.setText("0");
+
+        for(int q=0; q < 10; q++){
+
+            int id = q;
+            String time = "0"+q+":00 PM";
+            String location = "Room "+q;
+
+            Meeting meeting = new Meeting(id, time, location, "Morgan");
+            meetingItems.add(meeting);
+        }
+
+        ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, meetingItems);
+        meetingList.setAdapter(adapter);
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override

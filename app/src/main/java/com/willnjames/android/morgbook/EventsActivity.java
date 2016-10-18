@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class BasicActivity extends BaseActivity {
+public class EventsActivity extends MeetingsActivity {
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
