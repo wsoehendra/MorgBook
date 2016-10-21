@@ -38,6 +38,9 @@ public class AttendanceActivity extends Activity {
         setContentView(R.layout.attendance_activity);
         initialise();
         setDateText();
+        dbAccess.open();
+        dbAccess.getAttendance();
+        dbAccess.close();
     }
 
     //Create and setup the Attendance table

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.willnjames.android.morgbook.Model.Attendance;
+import com.willnjames.android.morgbook.Model.Meeting;
 import com.willnjames.android.morgbook.Model.Person;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class DatabaseAccess {
     private SQLiteDatabase database;
     private static DatabaseAccess instance;
 
-    private DatabaseAccess(Context context){
+    private DatabaseAccess(Context context) {
         this.openHelper = new DatabaseOpener(context);
     }
 
@@ -44,11 +45,11 @@ public class DatabaseAccess {
         }
     }
 
-    public ArrayList<Person> getStudents(){
+    public ArrayList<Person> getStudents() {
         ArrayList<Person> studentsList = new ArrayList<Person>();
-        Cursor cursor  = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME", null);
         cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
+        while (!cursor.isAfterLast()) {
             Person p = new Person(
                     cursor.getInt(0),
                     cursor.getString(1),
@@ -59,15 +60,15 @@ public class DatabaseAccess {
             cursor.moveToNext();
         }
         cursor.close();
-        Log.d("QUERY|GET", "List of Students: "+studentsList.toString());
+        Log.d("QUERY|GET", "List of Students: " + studentsList.toString());
         return studentsList;
     }
 
-    public ArrayList<Attendance> getAttendance(){
+    public ArrayList<Attendance> getAttendance() {
         ArrayList<Attendance> attendanceList = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE",null);
+        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE", null);
         cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
+        while (!cursor.isAfterLast()) {
             Attendance a = new Attendance(
                     cursor.getInt(0),
                     cursor.getInt(1),
@@ -78,35 +79,32 @@ public class DatabaseAccess {
             cursor.moveToNext();
         }
         cursor.close();
-        Log.d("QUERY|GET", "All Attendance: "+attendanceList.toString());
+        Log.d("QUERY|GET", "All Attendance: " + attendanceList.toString());
         return attendanceList;
     }
 
-    public void addAttendance(Attendance a){
-        Cursor checkIfExists = database.rawQuery("SELECT * FROM ATTENDANCE WHERE Z_ID='"+a.getZ_ID()+"' AND WEEKNO='"+a.getWeekNo()+"'", null);
-        if(checkIfExists.getCount()==0){
+    public void addAttendance(Attendance a) {
+        Cursor checkIfExists = database.rawQuery("SELECT * FROM ATTENDANCE WHERE Z_ID='" + a.getZ_ID() + "' " +
+                "AND WEEKNO='" + a.getWeekNo() + "'", null);
+        if (checkIfExists.getCount() == 0) {
             try {
-                String sqlCommand =
-                        "INSERT INTO ATTENDANCE (Z_ID, WEEKNO, STATUS) " +
-                                "VALUES ('"+a.getZ_ID()+"','"+a.getWeekNo()+"','"+a.getStatus()+"')";
+                String sqlCommand = "INSERT INTO ATTENDANCE (Z_ID, WEEKNO, STATUS) " +
+                        "VALUES ('" + a.getZ_ID() + "','" + a.getWeekNo() + "','" + a.getStatus() + "')";
                 database.execSQL(sqlCommand);
-                Log.d("QUERY|ADD", "Adding Attendance Successful!"+"\n"+a.toString());
-                getAttendance().toString();
-            } catch (Exception e){
-                Log.d("QUERY|ADD", "Adding Attendance Failed!"+"\n"+e.toString());
+                Log.d("QUERY|ADD", "Adding Attendance Successful!" + "\n" + a.toString());
+            } catch (Exception e) {
+                Log.d("QUERY|ADD", "Adding Attendance Failed!" + "\n" + e.toString());
             }
-        } else if(checkIfExists.getCount()>0){
+        } else if (checkIfExists.getCount() > 0) {
             try {
                 String sqlCommand = "UPDATE ATTENDANCE " +
                         "SET STATUS='" + a.getStatus() + "' " +
                         "WHERE Z_ID='" + a.getZ_ID() + "' AND WEEKNO='" + a.getWeekNo() + "'";
                 database.execSQL(sqlCommand);
                 Log.d("QUERY|ADD", "Updating Attendance Successful!" + "\n" + a.toString());
-            } catch (Exception e){
-                Log.d("QUERY|ADD", "Updating Attendance Failed!"+"\n"+e.toString());
+            } catch (Exception e) {
+                Log.d("QUERY|ADD", "Updating Attendance Failed!" + "\n" + e.toString());
             }
         }
-
     }
-
 }

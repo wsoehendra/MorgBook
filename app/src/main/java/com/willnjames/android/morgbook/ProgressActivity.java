@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * Created by jamesprijatna on 7/10/16.
  */
-public class SecondActivity extends Activity {
+public class ProgressActivity extends Activity {
 
     private TextClock textClock;
     private Button popup;
@@ -28,7 +28,7 @@ public class SecondActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity2);
+        setContentView(R.layout.activity_progress);
 
         textClock = (TextClock) findViewById(R.id.textClock2);
         popup = (Button) findViewById(R.id.popup);
@@ -53,8 +53,8 @@ public class SecondActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent myIntent = new Intent(SecondActivity.this, PopupMeetingActivity.class);
-                SecondActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(ProgressActivity.this, PopupMeetingActivity.class);
+                ProgressActivity.this.startActivity(myIntent);
 
 
             }
