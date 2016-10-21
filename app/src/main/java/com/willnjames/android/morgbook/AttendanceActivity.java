@@ -34,27 +34,10 @@ public class AttendanceActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.attendance_activity);
         initialise();
-
-        dateText = (TextView) findViewById(R.id.dateText);
-
-        Calendar c = Calendar.getInstance();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-        Date d = new Date();
-        String dayOfTheWeek = sdf.format(d);
-
-        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
-        Date dd = new Date();
-        String month = sdm.format(dd);
-
-        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
-
-        dateText.setText(sDate);
+        setDateText();
     }
 
     //Create and setup the Attendance table
@@ -127,19 +110,30 @@ public class AttendanceActivity extends Activity {
     View.OnClickListener doSomething(final Button button, final int studentID, final int weekNo)  {
         return new View.OnClickListener() {
             int counter = 1;
+            Attendance attendance;
             public void onClick(View v) {
                 Log.d("Attendance|Click", "Student: "+studentID+" Week: "+weekNo+"\n");
                 if(counter==1) {    //Student is present
                     v.getBackground().setColorFilter(Color.parseColor("#FF00FF"), PorterDuff.Mode.MULTIPLY);
                     counter++;
+                    Attendance aPresent = new Attendance(studentID,weekNo,"Present");
+                    dbAccess.open();
+                    dbAccess.addAttendance(aPresent);
+                    dbAccess.close();
                 }
                 else if(counter==2){    //Student is absent
                     v.getBackground().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
                     counter++;
+                    dbAccess.open();
+                    Attendance aAbsent = new Attendance(studentID,weekNo,"Absent");
+                    dbAccess.addAttendance(aAbsent);
                 }
                 else if(counter==3){    //Student is absent with explanation
                     v.getBackground().setColorFilter(Color.parseColor("#0000FF"), PorterDuff.Mode.MULTIPLY);
                     counter++;
+                    dbAccess.open();
+                    Attendance aAbsentExp = new Attendance(studentID,weekNo,"Explained Absence");
+                    dbAccess.addAttendance(aAbsentExp);
                 }
                 else if(counter==4){
                     v.getBackground().clearColorFilter();
@@ -147,6 +141,24 @@ public class AttendanceActivity extends Activity {
                 }
             }
         };
+    }
+
+    private void setDateText(){
+        dateText = (TextView) findViewById(R.id.dateText);
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
+        Date dd = new Date();
+        String month = sdm.format(dd);
+
+        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+
+        dateText.setText(sDate);
     }
 
 }

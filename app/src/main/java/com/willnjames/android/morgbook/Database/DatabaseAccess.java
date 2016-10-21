@@ -82,4 +82,31 @@ public class DatabaseAccess {
         return attendanceList;
     }
 
+    public void addAttendance(Attendance a){
+        Cursor checkIfExists = database.rawQuery("SELECT * FROM ATTENDANCE WHERE Z_ID='"+a.getZ_ID()+"' AND WEEKNO='"+a.getWeekNo()+"'", null);
+        if(checkIfExists.getCount()==0){
+            try {
+                String sqlCommand =
+                        "INSERT INTO ATTENDANCE (Z_ID, WEEKNO, STATUS) " +
+                                "VALUES ('"+a.getZ_ID()+"','"+a.getWeekNo()+"','"+a.getStatus()+"')";
+                database.execSQL(sqlCommand);
+                Log.d("QUERY|ADD", "Adding Attendance Successful!"+"\n"+a.toString());
+                getAttendance().toString();
+            } catch (Exception e){
+                Log.d("QUERY|ADD", "Adding Attendance Failed!"+"\n"+e.toString());
+            }
+        } else if(checkIfExists.getCount()>0){
+            try {
+                String sqlCommand = "UPDATE ATTENDANCE " +
+                        "SET STATUS='" + a.getStatus() + "' " +
+                        "WHERE Z_ID='" + a.getZ_ID() + "' AND WEEKNO='" + a.getWeekNo() + "'";
+                database.execSQL(sqlCommand);
+                Log.d("QUERY|ADD", "Updating Attendance Successful!" + "\n" + a.toString());
+            } catch (Exception e){
+                Log.d("QUERY|ADD", "Updating Attendance Failed!"+"\n"+e.toString());
+            }
+        }
+
+    }
+
 }
