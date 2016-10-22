@@ -118,12 +118,16 @@ public class AttendanceActivity extends Activity {
                     String status = attendances.get(i).getStatus();
                     switch (status){
                         case "Present": b.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+                            b.setTag("Present");
                             break;
                         case "Absent": b.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+                            b.setTag("Absent");
                             break;
                         case "Explained Absence": b.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
+                            b.setTag("Explained Absence");
                             break;
                         case "NODATA": b.getBackground().clearColorFilter();
+                            b.setTag("NODATA");
                             break;
                     }
                 }
@@ -138,6 +142,14 @@ public class AttendanceActivity extends Activity {
             int counter = 1;
             Attendance attendance;
             public void onClick(View v) {
+                if(v.getTag() == "Present") {
+                    counter = 2;
+                } else if (v.getTag() == "Absent"){
+                    counter = 3;
+                } else if (v.getTag() == "Explained Absence"){
+                    counter = 4;
+                }
+
                 Log.d("Attendance|Click", "Student: "+studentID+" Week: "+weekNo+"\n");
                 if(counter==1) {    //Student is present
                     v.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
