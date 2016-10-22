@@ -45,6 +45,7 @@ public class DatabaseAccess {
         }
     }
 
+    //Get ALL Students
     public ArrayList<Person> getStudents() {
         ArrayList<Person> studentsList = new ArrayList<Person>();
         Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE ROLE IS 'Student' ORDER BY LNAME", null);
@@ -111,5 +112,19 @@ public class DatabaseAccess {
     public int getAbsentCount(){
         Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE WHERE STATUS = 'Absent' OR 'Explained Absence'", null);
         return cursor.getCount();
+    }
+
+    //Get A Student
+    public Person getStudent(int ZID){
+        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE Z_ID='"+ZID+"'",null);
+        cursor.moveToFirst();
+        Person p = new Person(
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3)
+        );
+
+        return p;
     }
 }

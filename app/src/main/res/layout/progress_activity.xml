@@ -8,63 +8,105 @@
     tools:context="com.willnjames.android.morgbook.MainActivity">
 
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="81dp"
-        android:src="@drawable/rectangledark"
-        android:id="@+id/topImage"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="wrap_content">
 
-    <TextClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="35dp"
-        android:layout_marginTop="5dp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/textClock"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="17dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:src="@drawable/rectangledark"
+            android:id="@+id/topImage"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-    <TextClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:id="@+id/textClock2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#FFFFFF"
+            android:id="@+id/textClock"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="17dp" />
 
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textClock2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
-        android:id="@+id/popup" />
+        <TextView
+            android:text="Student Progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="27dp"
+            android:layout_marginStart="30dp"
+            android:id="@+id/textView3" />
 
-    <TextView
-        android:text="Student Progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        android:textSize="25dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="27dp"
-        android:layout_marginStart="30dp"
-        android:id="@+id/textView3" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateText"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17dp"
+            android:layout_below="@+id/textClock"
+            android:layout_alignEnd="@+id/textClock"
+            android:layout_marginEnd="3dp" />
+    </RelativeLayout>
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dateText"
-        android:textColor="@color/colorPrimary"
-        android:textSize="17dp"
-        android:layout_below="@+id/textClock"
-        android:layout_alignEnd="@+id/textClock"
-        android:layout_marginEnd="3dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="81dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="300dp"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollIndicators="right">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rv"
+                        android:scrollIndicators="right"
+                        android:scrollbars="vertical"
+                        android:layout_marginTop="15dp">
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
