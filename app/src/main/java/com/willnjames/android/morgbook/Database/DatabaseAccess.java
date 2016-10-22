@@ -107,4 +107,19 @@ public class DatabaseAccess {
             }
         }
     }
+
+    public Attendance checkAttendance(int student, int week){
+        Attendance a = new Attendance();
+        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE WHERE Z_ID=5010004 AND WEEKNO=1", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            a.setA_ID(cursor.getInt(0));
+            a.setZ_ID(cursor.getInt(1));
+            a.setWeekNo(cursor.getInt(2));
+            a.setStatus(cursor.getString(3));
+        }
+        cursor.close();
+        Log.d("QUERY|GET", "Attendance Selected: " + a.toString());
+        return a;
+    }
 }

@@ -29,6 +29,7 @@ public class AttendanceActivity extends Activity {
     private TextView[] txt = new TextView[13];
     private Button[] btn = new Button[12];
     DatabaseAccess dbAccess;
+    ArrayList<Button> buttons = new ArrayList<Button>();
 
     private TextView dateText;
 
@@ -38,13 +39,13 @@ public class AttendanceActivity extends Activity {
         setContentView(R.layout.attendance_activity);
         initialise();
         setDateText();
-        dbAccess.open();
-        dbAccess.getAttendance();
-        dbAccess.close();
+        populateAttendances();
     }
 
     //Create and setup the Attendance table
     public void initialise() {
+        dbAccess = DatabaseAccess.getInstance(this);
+
         TableLayout tableLayout = (TableLayout) findViewById(R.id.table_main);
         TableRow weekLabel = new TableRow(this);
 
@@ -69,13 +70,9 @@ public class AttendanceActivity extends Activity {
                 new TableLayout.LayoutParams
                         (TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
 
-        dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
         ArrayList<Person> studentsList = dbAccess.getStudents();
-        if(studentsList == null){
-            Log.d("Query", "List is null");
-        }
-
+        if(studentsList == null){Log.d("Query", "List is null");}
         dbAccess.close();
 
         for (int i = 0; i < studentsList.size(); i++) {
@@ -92,10 +89,11 @@ public class AttendanceActivity extends Activity {
             for(int j = 0; j < btn.length; j++){
                 int weekNo = j+1;
                 btn[j] = new Button(this);
-                btn[j].setId(View.generateViewId());
                 btn[j].setGravity(Gravity.CENTER);
                 btn[j].setLayoutParams(new TableRow.LayoutParams(115, 115));
                 btn[j].setOnClickListener(doSomething(btn[j], studentID, weekNo));
+                btn[j].setId(Integer.valueOf(String.valueOf(weekNo)+String.valueOf(studentID)));
+                buttons.add(btn[j]);
                 tableRow.addView(btn[j]);
             }
 
@@ -109,6 +107,32 @@ public class AttendanceActivity extends Activity {
 
     //Populate the Attendance table with existing records
     //some method here
+    private void populateAttendances(){
+        dbAccess.open();
+        ArrayList<Attendance> attendances = dbAccess.getAttendance();
+        dbAccess.close();
+
+        for(int i=0;i<attendances.size();i++){
+            int id = Integer.valueOf(String.valueOf(attendances.get(i).getWeekNo())+String.valueOf(attendances.get(i).getZ_ID()));
+            for(Button b: buttons){
+                if(b.getId() == id){
+                    String status = attendances.get(i).getStatus();
+                    switch (status){
+                        case "Present": b.setBackgroundColor(Color.GREEN);
+                            break;
+                        case "Absent": b.setBackgroundColor(Color.RED);
+                            break;
+                        case "Explained Absence": b.setBackgroundColor(Color.YELLOW);
+                            break;
+                        case "NODATA": b.setBackgroundColor(Color.WHITE);
+                            break;
+                    }
+                }
+            }
+        }
+
+    }
+
 
     View.OnClickListener doSomething(final Button button, final int studentID, final int weekNo)  {
         return new View.OnClickListener() {
@@ -117,30 +141,38 @@ public class AttendanceActivity extends Activity {
             public void onClick(View v) {
                 Log.d("Attendance|Click", "Student: "+studentID+" Week: "+weekNo+"\n");
                 if(counter==1) {    //Student is present
-                    v.getBackground().setColorFilter(Color.parseColor("#FF00FF"), PorterDuff.Mode.MULTIPLY);
+                    v.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
                     counter++;
                     Attendance aPresent = new Attendance(studentID,weekNo,"Present");
                     dbAccess.open();
                     dbAccess.addAttendance(aPresent);
                     dbAccess.close();
+                    populateAttendances();
                 }
                 else if(counter==2){    //Student is absent
-                    v.getBackground().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                    v.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
                     counter++;
                     dbAccess.open();
                     Attendance aAbsent = new Attendance(studentID,weekNo,"Absent");
                     dbAccess.addAttendance(aAbsent);
+                    populateAttendances();
                 }
                 else if(counter==3){    //Student is absent with explanation
-                    v.getBackground().setColorFilter(Color.parseColor("#0000FF"), PorterDuff.Mode.MULTIPLY);
+                    v.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
                     counter++;
                     dbAccess.open();
                     Attendance aAbsentExp = new Attendance(studentID,weekNo,"Explained Absence");
                     dbAccess.addAttendance(aAbsentExp);
+                    populateAttendances();
                 }
                 else if(counter==4){
-                    v.getBackground().clearColorFilter();
+                    v.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
                     counter=1;
+                    dbAccess.open();
+                    Attendance aNoData = new Attendance(studentID,weekNo,"NODATA");
+                    dbAccess.addAttendance(aNoData);
+                    populateAttendances();
+
                 }
             }
         };

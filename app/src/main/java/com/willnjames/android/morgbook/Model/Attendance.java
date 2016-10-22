@@ -24,6 +24,9 @@ public class Attendance {
         this.status = status;
     }
 
+    public Attendance() {
+    }
+
     public int getA_ID() {
         return a_ID;
     }
