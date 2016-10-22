@@ -117,13 +117,13 @@ public class AttendanceActivity extends Activity {
                 if(b.getId() == id){
                     String status = attendances.get(i).getStatus();
                     switch (status){
-                        case "Present": b.setBackgroundColor(Color.GREEN);
+                        case "Present": b.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
                             break;
-                        case "Absent": b.setBackgroundColor(Color.RED);
+                        case "Absent": b.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
                             break;
-                        case "Explained Absence": b.setBackgroundColor(Color.YELLOW);
+                        case "Explained Absence": b.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
                             break;
-                        case "NODATA": b.setBackgroundColor(Color.WHITE);
+                        case "NODATA": b.getBackground().clearColorFilter();
                             break;
                     }
                 }
@@ -165,7 +165,7 @@ public class AttendanceActivity extends Activity {
                     populateAttendances();
                 }
                 else if(counter==4){
-                    v.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+                    v.getBackground().clearColorFilter();
                     counter=1;
                     dbAccess.open();
                     Attendance aNoData = new Attendance(studentID,weekNo,"NODATA");
