@@ -191,33 +191,6 @@
         android:layout_below="@+id/attendanceLabel"
         android:layout_alignParentStart="true" />
 
-    <ProgressBar
-        android:id="@+id/weeklyProgress"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminate="false"
-        android:max="100"
-        android:secondaryProgress="100"
-        android:progressDrawable="@drawable/circleprogress"
-        android:layout_below="@+id/weekLabel"
-        android:layout_alignStart="@+id/weekBG" />
-
-
-    <TextView
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=" - "
-        android:gravity="right"
-        android:textColor="#00FF00"
-        android:textStyle="bold"
-        android:textSize="45dp"
-        android:id="@+id/attendanceText"
-        android:layout_below="@+id/attendanceLabel"
-        android:layout_alignParentStart="@+id/circularProgressbar"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft= "60dp"/>
 
     <TextView
         android:layout_width="35dp"
@@ -225,29 +198,29 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="%"
         android:gravity="right"
-        android:textColor="#00FF00"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:textSize="45dp"
         android:id="@+id/textView2"
         android:layout_below="@+id/attendanceLabel"
         android:layout_alignParentStart="true"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft= "150dp"/>
+        android:layout_marginLeft= "130dp"/>
 
     <TextView
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=" - "
         android:gravity="left"
-        android:textColor="#00FF00"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:textSize="45dp"
         android:id="@+id/weekText"
         android:layout_below="@+id/weekLabel"
         android:layout_alignStart="@+id/weeklyProgress"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft= "95dp"/>
+        android:layout_marginLeft= "100dp"/>
 
     <TextView
         android:layout_width="40dp"
@@ -255,14 +228,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="W"
         android:gravity="left"
-        android:textColor="#00FF00"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:textSize="45dp"
         android:id="@+id/textView4"
         android:layout_below="@+id/weekLabel"
         android:layout_alignStart="@+id/weeklyProgress"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft= "55dp"/>
+        android:layout_marginLeft= "60dp"/>
 
     <TextView
         android:text="##"
@@ -274,7 +247,7 @@
         android:gravity="center"
         android:layout_below="@+id/circularProgressbar"
         android:layout_alignStart="@+id/progressBG"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="2dp" />
 
     <TextView
@@ -286,7 +259,7 @@
         android:textSize="15dp"
         android:layout_below="@+id/attendingText"
         android:layout_alignStart="@+id/progressBG"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="10dp" />
 
     <TextView
@@ -299,7 +272,7 @@
         android:gravity="center"
         android:layout_below="@+id/circularProgressbar"
         android:layout_alignEnd="@+id/progressBG"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="2dp" />
 
     <TextView
@@ -311,8 +284,9 @@
         android:textSize="15dp"
         android:layout_below="@+id/missingText"
         android:layout_alignEnd="@+id/progressBG"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="40dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -366,6 +340,32 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_toStartOf="@+id/button2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=" - "
+        android:gravity="right"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="45dp"
+        android:id="@+id/attendanceText"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignEnd="@+id/attendanceLabel" />
+
+    <ProgressBar
+        android:id="@+id/weeklyProgress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="false"
+        android:max="100"
+        android:secondaryProgress="100"
+        android:progressDrawable="@drawable/circleprogress"
+        android:layout_below="@+id/weekLabel"
+        android:layout_alignStart="@+id/weekLabel" />
 
 
 </RelativeLayout>

@@ -28,10 +28,27 @@ public class ProgressActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_progress);
+        setContentView(R.layout.progress_activity);
 
         textClock = (TextClock) findViewById(R.id.textClock2);
         popup = (Button) findViewById(R.id.popup);
+
+        setDateText();
+
+        popup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(ProgressActivity.this, PopupMeetingActivity.class);
+                ProgressActivity.this.startActivity(myIntent);
+
+
+            }
+        });
+
+    }
+
+    private void setDateText(){
         dateText = (TextView) findViewById(R.id.dateText);
 
         Calendar c = Calendar.getInstance();
@@ -47,18 +64,5 @@ public class ProgressActivity extends Activity {
         String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
 
         dateText.setText(sDate);
-
-
-        popup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent myIntent = new Intent(ProgressActivity.this, PopupMeetingActivity.class);
-                ProgressActivity.this.startActivity(myIntent);
-
-
-            }
-        });
-
     }
 }

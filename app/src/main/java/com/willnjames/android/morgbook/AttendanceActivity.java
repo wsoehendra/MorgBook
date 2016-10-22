@@ -100,7 +100,6 @@ public class AttendanceActivity extends Activity {
             tableLayout.addView(tableRow);
             tableRowParams.setMargins(30, 5, 10, 5);
             tableRow.setLayoutParams(tableRowParams);
-
         }
 
     }

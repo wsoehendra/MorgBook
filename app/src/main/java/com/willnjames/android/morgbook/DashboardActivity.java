@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.willnjames.android.morgbook.Database.DatabaseAccess;
+import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Meeting;
 import com.willnjames.android.morgbook.Model.ProgressBarAnimation;
 
@@ -44,6 +46,8 @@ public class DashboardActivity extends Activity {
 
     private ArrayList<Meeting> meetingItems;
 
+    DatabaseAccess dbAccess;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +72,7 @@ public class DashboardActivity extends Activity {
 
         meetingList = (ListView) findViewById(R.id.meetingsList);
 
-        Calendar c = Calendar.getInstance();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-        Date d = new Date();
-        String dayOfTheWeek = sdf.format(d);
-
-        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
-        Date dd = new Date();
-        String month = sdm.format(dd);
-
-        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
-
-        dateText.setText(sDate);
+        setDateText();
 
         attendanceProgressBar.setMax(10000);
         weekProgressBar.setMax(1200);
@@ -135,11 +127,17 @@ public class DashboardActivity extends Activity {
                 int b = a.nextInt(101);
                 int c = b*100;
 
+                dbAccess = DatabaseAccess.getInstance(getApplicationContext());
+                dbAccess.open();
+                ArrayList<Attendance> attend = dbAccess.getAttendance();
+                int allRecords = attend.size();
+                int absentees = dbAccess.getAbsentCount();
+
                 attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, c);
                 attendanceAnimation.setDuration(1000);
                 attendanceProgressBar.startAnimation(attendanceAnimation);
 
-                attendanceProgressValue = attendanceProgressValue / 100;
+                attendanceProgressValue = absentees/allRecords;
 
                 startAttendanceAnimation(attendanceProgressValue, b);
 
@@ -183,6 +181,29 @@ public class DashboardActivity extends Activity {
             }
         });
 
+    }
+
+    private void setDateText() {
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        Date d = new Date();
+        String dayOfTheWeek = sdf.format(d);
+
+        SimpleDateFormat sdm = new SimpleDateFormat("MMM");
+        Date dd = new Date();
+        String month = sdm.format(dd);
+
+        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+
+        dateText.setText(sDate);
+    }
+
+    private void fillAttendanceProgress(){
+        dbAccess.open();
+        ArrayList<Attendance> a = dbAccess.getAttendance();
+        int allRecords = a.size();
+        int absentees = dbAccess.getAbsentCount();
     }
 
     private void startAttendanceAnimation(int from, int to) {
