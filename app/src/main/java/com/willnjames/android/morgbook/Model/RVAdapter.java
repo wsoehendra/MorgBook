@@ -69,6 +69,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.studentViewHolder>
                 int zID = personsList.get(i).getZ_ID();
                 try{
                     ((ProgressActivity) view.getContext()).setProgressSelection(zID);
+                    Log.d("TEST6", "Student Clicked");
                 } catch (Exception e){
                     Log.d("EXCEPTION", "Adapter to ProgressActivity method call"+e.toString());
                 }

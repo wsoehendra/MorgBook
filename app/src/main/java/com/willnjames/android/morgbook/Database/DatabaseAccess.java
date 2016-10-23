@@ -118,10 +118,9 @@ public class DatabaseAccess {
     //Get a Student's Progress
     public ArrayList<Progress> getStudentProgress(int ZID){
         ArrayList<Progress> progressList = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM PROGRESS WHERE Z_ID="+ZID+"",null);
+        Cursor cursor = database.rawQuery("SELECT * FROM PROGRESS WHERE Z_ID="+ZID+" ORDER BY WEEKNO",null);
         cursor.moveToFirst();
         if(cursor.getCount() == 0){
-            Log.d("TEST1", "EMPTY");
             return null;
         }
         while(!cursor.isAfterLast()) {
@@ -136,7 +135,6 @@ public class DatabaseAccess {
             cursor.moveToNext();
         }
         cursor.close();
-        Log.d("TEST1", "Progress for ZID: "+ZID+" "+progressList.toString());
         return progressList;
     }
 
@@ -146,5 +144,31 @@ public class DatabaseAccess {
         Person p = new Person(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
         cursor.close();
         return p;
+    }
+
+    public void addProgress(Progress p) {
+        Cursor checkIfExists = database.rawQuery("SELECT * FROM PROGRESS WHERE Z_ID='" + p.getZ_ID() + "' " +
+                "AND WEEKNO='" + p.getWeekNo() + "'", null);
+        if (checkIfExists.getCount() == 0) {
+            try {
+                String sqlCommand = "INSERT INTO PROGRESS (Z_ID, PROGRESS, WEEKNO, NOTES) " +
+                        "VALUES ('" + p.getZ_ID() + "','" + p.getProgress() + "','" + p.getWeekNo() + "','" + p.getNotes() + "')";
+                database.execSQL(sqlCommand);
+                Log.d("QUERY|ADD", "Adding Progress Successful!" + "\n" + p.toString());
+            } catch (Exception e) {
+                Log.d("QUERY|ADD", "Adding Progress Failed!" + "\n" + e.toString());
+            }
+        } else if (checkIfExists.getCount() > 0) {
+            try {
+//                String sqlCommand = "UPDATE PROGRESS " +
+//                        "SET PROGRESS='" + p.getProgress() + "','" + "NOTES='BLAH' " +
+//                        "WHERE Z_ID='" + p.getZ_ID() + "' AND WEEKNO='" + p.getWeekNo() + "'";
+                String sqlCommand = "UPDATE PROGRESS SET PROGRESS='Bad',NOTES='N/A WHERE Z_ID=5010004 AND WEEKNO=4";
+                database.execSQL(sqlCommand);
+                Log.d("QUERY|ADD", "Updating Progress Successful!" + "\n" + p.toString());
+            } catch (Exception e) {
+                Log.d("QUERY|ADD", "Updating Progress Failed!" + "\n" + e.toString());
+            }
+        }
     }
 }

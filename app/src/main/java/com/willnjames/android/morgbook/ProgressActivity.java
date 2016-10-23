@@ -8,16 +8,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
 import com.willnjames.android.morgbook.Model.Person;
 import com.willnjames.android.morgbook.Model.Progress;
@@ -43,11 +52,19 @@ public class ProgressActivity extends Activity {
     DatabaseAccess dbAccess;
 
     GraphView graph;
-    RelativeLayout graphLayout;
-    private TextView testTextV;
-    LineGraphSeries<DataPoint> currentProgress;
+    LineGraphSeries<DataPoint> series;
+    Person selection;
+    ArrayList<Progress> pList;
 
     TextView detailHeading;
+    Spinner weekSpinner;
+    Spinner progressSpinner;
+    EditText notesEditText;
+
+    String inStudentProgress;
+    String inStudentNotes;
+    int inWeek;
+    Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +90,7 @@ public class ProgressActivity extends Activity {
 
         detailHeading = (TextView) findViewById(R.id.detailHeadingTextView);
         graph = (GraphView) findViewById(R.id.progressGraph);
+
         graph.getViewport().setMinX(1);
         graph.getViewport().setMaxX(13);
         graph.getViewport().setMinY(0);
@@ -84,7 +102,62 @@ public class ProgressActivity extends Activity {
         staticLabelsFormatter.setVerticalLabels(new String[] {"Bad", "Avg.", "Good"});
         staticLabelsFormatter.setHorizontalLabels(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ""});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+        initializeWeekSpinner();
+        initializeProgressSpinner();
+
+        notesEditText = (EditText) findViewById(R.id.notesEditText);
+        submitButton = (Button) findViewById(R.id.submitButton);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selection == null){
+                    return;
+                }
+                inStudentNotes = String.valueOf(notesEditText.getText());
+                Progress inProg = new Progress (selection.getZ_ID(), inStudentProgress, inWeek, inStudentNotes);
+                dbAccess.open();
+                dbAccess.addProgress(inProg);
+                dbAccess.close();
+                initializeWeekSpinner();
+            }
+        });
     }
+
+    private void initializeProgressSpinner() {
+        progressSpinner = (Spinner) findViewById(R.id.progressSpinner);
+        List<String> list = new ArrayList<String>();
+        list.add("Bad");
+        list.add("Average");
+        list.add("Good");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        progressSpinner.setAdapter(dataAdapter);
+        progressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0: Log.d("TEST6", "BAD Selected!");
+                        inStudentProgress = "Bad";
+                        break;
+                    case 1: Log.d("TEST6", "AVERAGE Selected!");
+                        inStudentProgress = "Average";
+                        break;
+                    case 2: Log.d("TEST6", "GOOD Selected!");
+                        inStudentProgress = "Good";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
 
     private void setDateText() {
         dateText = (TextView) findViewById(R.id.dateText);
@@ -100,26 +173,108 @@ public class ProgressActivity extends Activity {
         dateText.setText(sDate);
     }
 
-    private void setChart(LineGraphSeries<DataPoint> series){
-        testTextV.setText("Text Set: "+series.toString());
-        //graph.addSeries(series);
+    private void initializeWeekSpinner(){
+        weekSpinner = (Spinner) findViewById(R.id.weekSpinner);
+        List<String> list = new ArrayList<String>();
+        list.add("Week 1");
+        list.add("Week 2");
+        list.add("Week 3");
+        list.add("Week 4");
+        list.add("Week 5");
+        list.add("Week 6");
+        list.add("Week 7");
+        list.add("Week 8");
+        list.add("Week 9");
+        list.add("Week 10");
+        list.add("Week 11");
+        list.add("Week 12");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        weekSpinner.setAdapter(dataAdapter);
+        weekSpinnerListener();
     }
 
+    public void weekSpinnerListener(){
+        weekSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(selection == null){
+                    return;
+                }
+                switch (i){
+                    case 0: Log.d("TEST6", "Spinner #1 Selected!");
+                        inWeek = 1;
+                        break;
+                    case 1: Log.d("TEST6", "Spinner #2 Selected!");
+                        inWeek = 2;
+                        break;
+                    case 2: Log.d("TEST6", "Spinner #3 Selected!");
+                        inWeek = 3;
+                        break;
+                    case 3: Log.d("TEST6", "Spinner #4 Selected!");
+                        inWeek = 4;
+                        break;
+                    case 4: Log.d("TEST6", "Spinner #5 Selected!");
+                        inWeek = 5;
+                        break;
+                    case 5: Log.d("TEST6", "Spinner #6 Selected!");
+                        inWeek = 6;
+                        break;
+                    case 6: Log.d("TEST6", "Spinner #7 Selected!");
+                        inWeek = 7;
+                        break;
+                    case 7: Log.d("TEST6", "Spinner #8 Selected!");
+                        inWeek = 8;
+                        break;
+                    case 8: Log.d("TEST6", "Spinner #9 Selected!");
+                        inWeek = 9;
+                        break;
+                    case 9: Log.d("TEST6", "Spinner #10 Selected!");
+                        inWeek = 10;
+                        break;
+                    case 10: Log.d("TEST6", "Spinner #11 Selected!");
+                        inWeek = 11;
+                        break;
+                    case 11: Log.d("TEST6", "Spinner #12 Selected!");
+                        inWeek = 12;
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void clearGraph(){
+        graph.removeAllSeries();
+    }
+
+
     public void setProgressSelection(int zID){
-        Person selection;
         String fullName;
 
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
-        ArrayList<Progress> pList = dbAccess.getStudentProgress(zID);
+        pList = dbAccess.getStudentProgress(zID);
+        Log.d("TEST6", pList.toString());
+        if(pList == null){
+            graph.removeAllSeries();
+            detailHeading.setText("No Data for Selected Student");
+            return;
+        }
         selection = dbAccess.getPerson(zID);
         dbAccess.close();
 
-        fullName = selection.getLName().toUpperCase()+", "+selection.getLName();
+        fullName = selection.getLName().toUpperCase()+", "+selection.getFName();
         DataPoint[] dp = new DataPoint[pList.size()];
 
         for(int i=0;i<pList.size();i++){
             double y = -1;
+
             switch(pList.get(i).getProgress()){
                 case "Bad": y=0;
                     break;
@@ -127,27 +282,24 @@ public class ProgressActivity extends Activity {
                     break;
                 case "Good": y=10;
                     break;
+                default: break;
             }
 
             double x;
             x = pList.get(i).getWeekNo();
-            dp[i] = new DataPoint(x,y);
-
+            DataPoint d = new DataPoint(x,y);
+            dp[i] = d;
         }
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(dp);
+        series = new LineGraphSeries<DataPoint>(dp);
         series.setThickness(10);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(13);
 
         detailHeading.setText("Weekly Progress for "+fullName);
-
+        clearGraph();
         graph.addSeries(series);
+
     }
 
-    /*private void setChart(LineData lineData){
-        LineChart progressChart = (LineChart) findViewById(R.id.progressChart);
-        progressChart.setData(lineData);
-        progressChart.invalidate();
-    }*/
 }

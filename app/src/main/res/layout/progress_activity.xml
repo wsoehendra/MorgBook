@@ -117,15 +117,85 @@
                 <com.jjoe64.graphview.GraphView
                     android:layout_width="match_parent"
                     android:layout_height="200dip"
-                    android:id="@+id/progressGraph" />
+                    android:id="@+id/progressGraph"
+                    android:paddingTop="15dp" />
 
             </LinearLayout>
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            </FrameLayout>
+                <TextView
+                    android:text="Details for"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/textView5"
+                    android:paddingLeft="5dp"
+                    android:textSize="20sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/weekSpinner"
+                    android:layout_weight="0.09"
+                    android:layout_below="@+id/textView5"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:text="Progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/weekSpinner"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/textView8"
+                    android:layout_marginLeft="5dp" />
+
+                <Spinner
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressSpinner"
+                    android:layout_marginStart="21dp"
+                    android:layout_alignTop="@+id/textView8"
+                    android:layout_toEndOf="@+id/textView8" />
+
+                <TextView
+                    android:text="Notes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView9"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/progressSpinner"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/notesEditText"
+                    android:layout_marginLeft="5dp"
+                    android:minLines="5"
+                    android:layout_marginRight="100dp"
+                    android:layout_below="@+id/textView9"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="5dp" />
+
+                <Button
+                    android:text="Submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/submitButton"
+                    android:layout_below="@+id/notesEditText"
+                    android:layout_alignStart="@+id/notesEditText"
+                    android:layout_marginTop="5dp" />
+
+            </RelativeLayout>
         </LinearLayout>
 
     </LinearLayout>
