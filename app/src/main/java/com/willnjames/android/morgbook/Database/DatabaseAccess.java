@@ -9,6 +9,7 @@ import android.util.Log;
 import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Meeting;
 import com.willnjames.android.morgbook.Model.Person;
+import com.willnjames.android.morgbook.Model.Progress;
 
 import java.util.ArrayList;
 
@@ -114,17 +115,36 @@ public class DatabaseAccess {
         return cursor.getCount();
     }
 
-    //Get A Student
-    public Person getStudent(int ZID){
-        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE Z_ID='"+ZID+"'",null);
+    //Get a Student's Progress
+    public ArrayList<Progress> getStudentProgress(int ZID){
+        ArrayList<Progress> progressList = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM PROGRESS WHERE Z_ID="+ZID+"",null);
         cursor.moveToFirst();
-        Person p = new Person(
-                cursor.getInt(0),
-                cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3)
-        );
+        if(cursor.getCount() == 0){
+            Log.d("TEST1", "EMPTY");
+            return null;
+        }
+        while(!cursor.isAfterLast()) {
+            Progress p = new Progress(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getInt(3),
+                    cursor.getString(4)
+            );
+            progressList.add(p);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.d("TEST1", "Progress for ZID: "+ZID+" "+progressList.toString());
+        return progressList;
+    }
 
+    public Person getPerson(int zID){
+        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE Z_ID='"+zID+"'", null);
+        cursor.moveToFirst();
+        Person p = new Person(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        cursor.close();
         return p;
     }
 }

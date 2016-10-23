@@ -1,5 +1,7 @@
 package com.willnjames.android.morgbook.Model;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -64,9 +66,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.studentViewHolder>
         studentViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Click", String.valueOf(personsList.get(i).getZ_ID()));
-                ProgressActivity pActivity = new ProgressActivity();
-                pActivity.setCurrentSelection(personsList.get(i).getZ_ID());
+                int zID = personsList.get(i).getZ_ID();
+                try{
+                    ((ProgressActivity) view.getContext()).setProgressSelection(zID);
+                } catch (Exception e){
+                    Log.d("EXCEPTION", "Adapter to ProgressActivity method call"+e.toString());
+                }
             }
         });
     }

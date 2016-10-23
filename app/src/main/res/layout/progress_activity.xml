@@ -64,7 +64,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent">
 
             <ScrollView
@@ -94,17 +94,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:text="Weekly Progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/detailHeadingTextView"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="5dp"
+                android:paddingRight="30dp"
+                android:textSize="24sp"
+                android:textColor="#000000" />
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:id="@+id/chartLayout">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/chart"
+                <com.jjoe64.graphview.GraphView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="200dip"
+                    android:id="@+id/progressGraph" />
 
             </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
         </LinearLayout>
 
     </LinearLayout>
