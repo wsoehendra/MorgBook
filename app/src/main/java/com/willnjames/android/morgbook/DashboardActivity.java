@@ -207,37 +207,42 @@ public class DashboardActivity extends Activity {
         int averageCounter = 0;
         int goodCounter = 0;
 
-        for (Progress p : allProgress) {
-            switch (p.getProgress()) {
-                case "Bad":
-                    badCounter++;
-                    break;
-                case "Average":
-                    averageCounter++;
-                    break;
-                case "Good":
-                    goodCounter++;
-                    break;
+        if(allProgress == null){
+
+        } else {
+            for (Progress p : allProgress) {
+                switch (p.getProgress()) {
+                    case "Bad":
+                        badCounter++;
+                        break;
+                    case "Average":
+                        averageCounter++;
+                        break;
+                    case "Good":
+                        goodCounter++;
+                        break;
+                }
             }
+
+            Log.d("Counters", "BAD:" + badCounter + "AV: " + averageCounter + "GOOD: " + goodCounter);
+
+            DataPoint[] dp = new DataPoint[4];
+            dp[0] = new DataPoint(0, 0);
+            dp[1] = new DataPoint(2, badCounter);
+            dp[2] = new DataPoint(4, averageCounter);
+            dp[3] = new DataPoint(6, goodCounter);
+
+
+            StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+            staticLabelsFormatter.setHorizontalLabels(new String[]{"", "Bad", "Average", "Good", ""});
+            graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+            series = new BarGraphSeries<>(dp);
+            series.setSpacing(45);
+            series.setColor(Color.parseColor("#00FF00"));
+            graph.addSeries(series);
         }
 
-        Log.d("Counters", "BAD:" + badCounter + "AV: " + averageCounter + "GOOD: " + goodCounter);
-
-        DataPoint[] dp = new DataPoint[4];
-        dp[0] = new DataPoint(0, 0);
-        dp[1] = new DataPoint(2, badCounter);
-        dp[2] = new DataPoint(4, averageCounter);
-        dp[3] = new DataPoint(6, goodCounter);
-
-
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-        staticLabelsFormatter.setHorizontalLabels(new String[]{"", "Bad", "Average", "Good", ""});
-        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
-        series = new BarGraphSeries<>(dp);
-        series.setSpacing(45);
-        series.setColor(Color.parseColor("#00FF00"));
-        graph.addSeries(series);
     }
 
     @Override

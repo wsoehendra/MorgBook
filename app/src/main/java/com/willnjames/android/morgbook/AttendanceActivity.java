@@ -108,6 +108,7 @@ public class AttendanceActivity extends Activity {
     private void populateAttendances(){
         dbAccess.open();
         ArrayList<Attendance> attendances = dbAccess.getAttendance();
+        Log.d("TEST5", "attendances: "+attendances.toString());
         dbAccess.close();
 
         for(int i=0;i<attendances.size();i++){
@@ -117,12 +118,15 @@ public class AttendanceActivity extends Activity {
                     String status = attendances.get(i).getStatus();
                     switch (status){
                         case "Present": b.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+                            Log.d("TEST5", "Set Button to PRESENT for: "+ attendances.get(i).getZ_ID()+attendances.get(i).getWeekNo());
                             b.setTag("Present");
                             break;
                         case "Absent": b.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+                            Log.d("TEST5", "Set Button to ABSENT for: "+ attendances.get(i).getZ_ID()+attendances.get(i).getWeekNo());
                             b.setTag("Absent");
                             break;
                         case "Explained Absence": b.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
+                            Log.d("TEST5", "Set Button to Exp Abs for: "+ attendances.get(i).getZ_ID()+attendances.get(i).getWeekNo());
                             b.setTag("Explained Absence");
                             break;
                         case "NODATA": b.getBackground().clearColorFilter();

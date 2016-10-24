@@ -239,60 +239,60 @@ public class ProgressActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(selectedStudent == null){
-                    errorText.setText("Please Select a Student");
+
                     return;
                 }
                 switch (i){
-                    case 0: Log.d("TEST6", "Spinner #0 Selected!");
+                    case 0:
                         inWeek = 0;
                         progressSpinner.setSelection(1);
                         notesEditText.setText("");
                         break;
-                    case 1: Log.d("TEST6", "Spinner #1 Selected!");
+                    case 1:
                         inWeek = 1;
                         populateFields();
                         break;
-                    case 2: Log.d("TEST6", "Spinner #2 Selected!");
+                    case 2:
                         inWeek = 2;
                         populateFields();
                         break;
-                    case 3: Log.d("TEST6", "Spinner #3 Selected!");
+                    case 3:
                         inWeek = 3;
                         populateFields();
                         break;
-                    case 4: Log.d("TEST6", "Spinner #4 Selected!");
+                    case 4:
                         inWeek = 4;
                         populateFields();
                         break;
-                    case 5: Log.d("TEST6", "Spinner #5 Selected!");
+                    case 5:
                         inWeek = 5;
                         populateFields();
                         break;
-                    case 6: Log.d("TEST6", "Spinner #6 Selected!");
+                    case 6:
                         inWeek = 6;
                         populateFields();
                         break;
-                    case 7: Log.d("TEST6", "Spinner #7 Selected!");
+                    case 7:
                         inWeek = 7;
                         populateFields();
                         break;
-                    case 8: Log.d("TEST6", "Spinner #8 Selected!");
+                    case 8:
                         inWeek = 8;
                         populateFields();
                         break;
-                    case 9: Log.d("TEST6", "Spinner #9 Selected!");
+                    case 9:
                         inWeek = 9;
                         populateFields();
                         break;
-                    case 10: Log.d("TEST6", "Spinner #10 Selected!");
+                    case 10:
                         inWeek = 10;
                         populateFields();
                         break;
-                    case 11: Log.d("TEST6", "Spinner #11 Selected!");
+                    case 11:
                         inWeek = 11;
                         populateFields();
                         break;
-                    case 12: Log.d("TEST6", "Spinner #12 Selected!");
+                    case 12:
                         inWeek = 12;
                         populateFields();
                         break;
