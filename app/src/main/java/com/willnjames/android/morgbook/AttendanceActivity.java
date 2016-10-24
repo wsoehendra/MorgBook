@@ -105,7 +105,6 @@ public class AttendanceActivity extends Activity {
     }
 
     //Populate the Attendance table with existing records
-    //some method here
     private void populateAttendances(){
         dbAccess.open();
         ArrayList<Attendance> attendances = dbAccess.getAttendance();
