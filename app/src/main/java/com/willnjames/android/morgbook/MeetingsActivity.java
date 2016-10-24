@@ -167,7 +167,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
             startTime.set(Calendar.MINUTE, Integer.valueOf(part4));
 
             Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR, Integer.valueOf(part5));
+            endTime.set(Calendar.HOUR, Integer.valueOf(part5) - 12);
             endTime.set(Calendar.MINUTE, Integer.valueOf(part6));
 
             WeekViewEvent event = new WeekViewEvent(0, stu+" "+"\n"+top+"\n" , place, startTime, endTime);
@@ -247,7 +247,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                         startTime.set(Calendar.MINUTE, startMinute);
 
                         Calendar endTime = (Calendar) startTime.clone();
-                        endTime.set(Calendar.HOUR, endHour);
+                        endTime.set(Calendar.HOUR, endHour -12);
                         endTime.set(Calendar.MINUTE, endMinute);
 
                         String eventInfo = "z"+studentEntry+" " + "\n" +topicEntry+"\n";
@@ -360,7 +360,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
             public String interpretDate(Calendar date) {
                 SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE", Locale.getDefault());
                 String weekday = weekdayNameFormat.format(date.getTime());
-                SimpleDateFormat format = new SimpleDateFormat(" M/d", Locale.getDefault());
+                SimpleDateFormat format = new SimpleDateFormat(" d/M", Locale.getDefault());
 
                 // All android api level do not have a standard way of getting the first letter of
                 // the week day name. Hence we get the first char programmatically.
@@ -372,7 +372,12 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
             @Override
             public String interpretTime(int hour) {
-                return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
+
+                if (hour ==24) hour = 0;
+                if (hour ==0) hour = 0;
+                return hour + ":00";
+
+                //return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
             }
         });
     }
