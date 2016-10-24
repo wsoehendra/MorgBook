@@ -110,8 +110,13 @@ public class DatabaseAccess {
         }
     }
 
+    public int getPresentCount() {
+        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE WHERE STATUS = 'Present' ", null);
+        return cursor.getCount();
+    }
+
     public int getAbsentCount() {
-        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE WHERE STATUS = 'Absent' OR 'Explained Absence'", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE WHERE STATUS = 'Absent' OR 'Explained Absence' ", null);
         return cursor.getCount();
     }
 
@@ -160,9 +165,6 @@ public class DatabaseAccess {
             }
         } else if (checkIfExists.getCount() > 0) {
             try {
-//                String sqlCommand = "UPDATE PROGRESS " +
-//                        "SET PROGRESS='" + p.getProgress() + "','" + "NOTES='BLAH' " +
-//                        "WHERE Z_ID='" + p.getZ_ID() + "' AND WEEKNO='" + p.getWeekNo() + "'";
                 String sqlCommand = "UPDATE PROGRESS SET PROGRESS='"+p.getProgress()+"',NOTES='"+p.getNotes()+"' WHERE Z_ID="+p.getZ_ID()+" AND WEEKNO="+p.getWeekNo()+"";
                 database.execSQL(sqlCommand);
                 Log.d("QUERY|ADD", "Updating Progress Successful!" + "\n" + p.toString());

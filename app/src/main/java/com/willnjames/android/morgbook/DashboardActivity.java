@@ -3,6 +3,7 @@ package com.willnjames.android.morgbook;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,6 +37,8 @@ public class DashboardActivity extends Activity {
 
     private TextView attendanceTextCount;
     private TextView weekTextCount;
+    private TextView attendingText;
+    private TextView absentText;
 
     private int attendanceProgressValue;
     private int weekProgressValue;
@@ -64,6 +67,8 @@ public class DashboardActivity extends Activity {
         reset = (Button) findViewById(R.id.resetButton);
         random = (Button) findViewById(R.id.button2);
         full = (Button) findViewById(R.id.button3);
+        attendingText = (TextView) findViewById(R.id.attendingText);
+        absentText = (TextView) findViewById(R.id.absentText);
 
         attendanceTextCount = (TextView) findViewById(R.id.attendanceText);
         weekTextCount = (TextView) findViewById(R.id.weekText);
@@ -108,29 +113,11 @@ public class DashboardActivity extends Activity {
             }
         });
 
-        dbAccess = DatabaseAccess.getInstance(getApplicationContext());
-        dbAccess.open();
-        ArrayList<Attendance> attend = dbAccess.getAttendance();
-        int allRecords = attend.size();
-        int absentees = dbAccess.getAbsentCount();
 
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attendanceProgressValue = attendanceProgressBar.getProgress();
-                weekProgressValue = weekProgressBar.getProgress();
-
-                Random a = new Random();
-                int b = a.nextInt(101);
-                int c = b*100;
-
-                attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, c);
-                attendanceAnimation.setDuration(1000);
-                attendanceProgressBar.startAnimation(attendanceAnimation);
-
-                attendanceProgressValue = attendanceProgressValue / 100;
-
-                startAttendanceAnimation(attendanceProgressValue, b);
+                refreshAttendanceProgress();
 
                 Random r = new Random();
                 int j = r.nextInt(13);
@@ -168,10 +155,38 @@ public class DashboardActivity extends Activity {
                 weekProgressValue = weekProgressValue / 100;
 
                 startWeekAnimation(weekProgressValue, 12);
-
             }
         });
 
+    }
+
+    private void refreshAttendanceProgress(){
+        dbAccess = DatabaseAccess.getInstance(getApplicationContext());
+        dbAccess.open();
+        ArrayList<Attendance> attend = dbAccess.getAttendance();
+        final double allRecords = attend.size();
+        final double present = dbAccess.getPresentCount();
+        final double absent = dbAccess.getAbsentCount();
+        Log.d("TEST7", "allRecords= "+allRecords+" present= "+present);
+        attendanceProgressValue = attendanceProgressBar.getProgress();
+        weekProgressValue = weekProgressBar.getProgress();
+
+        double a = ((present/allRecords)*100);
+        Log.d("TEST7", "a="+a);
+        int b = (int) a;
+        Log.d("TEST7", "b="+b);
+        int c = b*100;
+
+        attendingText.setText(String.valueOf((int) (present)));
+        absentText.setText(String.valueOf((int) (absent)));
+
+        attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, c);
+        attendanceAnimation.setDuration(1000);
+        attendanceProgressBar.startAnimation(attendanceAnimation);
+
+        attendanceProgressValue = attendanceProgressValue / 100;
+
+        startAttendanceAnimation(attendanceProgressValue, b);
     }
 
     private void setDateText() {
@@ -223,5 +238,11 @@ public class DashboardActivity extends Activity {
             }
         });
         animator.start();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        refreshAttendanceProgress();
     }
 }
