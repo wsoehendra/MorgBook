@@ -128,6 +128,7 @@ public class ProgressActivity extends Activity {
                     errorText.setText("");
                     inWeek = 0;
                     notesEditText.setText("");
+
                 }
             }
         });
