@@ -83,7 +83,7 @@ public class AttendanceActivity extends Activity {
             nameText.setText(fullName);
             nameText.setTextSize(17);
             nameText.setGravity(Gravity.LEFT);
-            nameText.setPadding(25,0,80,0);
+            nameText.setPadding(0,0,20,0);
             tableRow.addView(nameText);
 
             for(int j = 0; j < btn.length; j++){

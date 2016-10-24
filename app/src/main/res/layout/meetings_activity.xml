@@ -52,8 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/topImage"
-        android:layout_marginTop="50dp"
-        android:layout_alignStart="@+id/button9"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentStart="true"
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:eventTextColor="@android:color/white"
@@ -77,42 +77,31 @@
         android:background="@drawable/rectangledark"
         android:textColor="@color/colorPrimary"
         android:layout_below="@+id/topImage"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_alignParentStart="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentEnd="true"
         android:id="@+id/button6" />
 
-    <Button
-        android:text="Button"
+    <TextView
+        android:text="Selected Event:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/button6"
-        android:visibility="invisible"
-        android:id="@+id/button7" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/button7"
-        android:visibility="invisible"
-        android:id="@+id/button8" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/button8"
-        android:visibility="invisible"
-        android:id="@+id/button9" />
+        android:layout_below="@+id/topImage"
+        android:layout_alignStart="@+id/textView3"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView10" />
 
     <TextView
-        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/weekView"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_marginTop="73dp"
-        android:id="@+id/textView" />
+        android:layout_below="@+id/topImage"
+        android:layout_toEndOf="@+id/textView10"
+        android:textSize="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView11" />
+
 
 </RelativeLayout>

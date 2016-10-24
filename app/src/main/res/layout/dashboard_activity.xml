@@ -172,7 +172,7 @@
         android:layout_below="@+id/attendanceLabel"
         android:layout_alignParentStart="true"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft= "130dp"/>
+        android:layout_marginLeft= "150dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -256,7 +256,7 @@
         android:layout_marginRight="40dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=" - "
@@ -264,10 +264,11 @@
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:textSize="45dp"
+        android:layout_marginRight="815dp"
         android:id="@+id/attendanceText"
         android:layout_alignBaseline="@+id/textView2"
         android:layout_alignBottom="@+id/textView2"
-        android:layout_alignEnd="@+id/attendanceLabel" />
+        android:layout_alignStart="@id/attendanceLabel" />
 
     <ProgressBar
         android:id="@+id/weeklyProgress"
