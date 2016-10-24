@@ -103,11 +103,8 @@ public class Meeting {
     @Override
     public String toString() {
         return
-                "Student: " + studentZID + "\n"
-                        + "Staff: " + staffZID + "\n"
-                        + "Date: " + date + "\n"
-                        + "Start: " + startTime + "\n"
-                        + "End: " + endTime + "\n"
+                "z" + studentZID + "\n"
+                        + date + "   ||   "+ startTime + " - "+endTime+ "\n"
                         + "Topic: " + topic+"\n"
                         + "Room: " + room;
     }

@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -67,16 +69,16 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        meetingItems = new ArrayList<>();
+        dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+        meetingItems = dbAccess.getMeeting();
+        dbAccess.close();
 
         attendanceProgressValue = 0;
         weekProgressValue = 0;
 
         attendanceProgressBar = (ProgressBar) findViewById(R.id.circularProgressbar);
         weekProgressBar = (ProgressBar) findViewById(R.id.weeklyProgress);
-        reset = (Button) findViewById(R.id.resetButton);
-        random = (Button) findViewById(R.id.button2);
-        full = (Button) findViewById(R.id.button3);
         attendingText = (TextView) findViewById(R.id.attendingText);
         absentText = (TextView) findViewById(R.id.absentText);
 
@@ -90,7 +92,7 @@ public class DashboardActivity extends Activity {
         setDateText();
 
         attendanceProgressBar.setMax(10000);
-        weekProgressBar.setMax(1200);
+        weekProgressBar.setMax(1300);
 
         attendanceTextCount.setText("0");
         weekTextCount.setText("0");
@@ -98,93 +100,26 @@ public class DashboardActivity extends Activity {
 
         ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, meetingItems);
         meetingList.setAdapter(adapter);
-
+        meetingList.setPadding(0,15,0,20);
         graph = (GraphView) findViewById(R.id.progressGraph);
 
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attendanceProgressValue = attendanceProgressBar.getProgress();
-                weekProgressValue = weekProgressBar.getProgress();
-
-                attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, 0);
-                attendanceAnimation.setDuration(1000);
-                attendanceProgressBar.startAnimation(attendanceAnimation);
-
-                weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, 0);
-                weekAnimation.setDuration(1000);
-                weekProgressBar.startAnimation(weekAnimation);
-
-                attendanceProgressValue = attendanceProgressValue / 100;
-                weekProgressValue = weekProgressValue / 100;
-
-                startAttendanceAnimation(attendanceProgressValue, 0);
-                startWeekAnimation(weekProgressValue, 0);
-
-
-            }
-        });
-
-        random.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshAttendanceProgress();
-
-                Random r = new Random();
-                int j = r.nextInt(13);
-                int m = j*100;
-
-                weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, m);
-                weekAnimation.setDuration(1000);
-                weekProgressBar.startAnimation(weekAnimation);
-
-                weekProgressValue = weekProgressValue / 100;
-
-                startWeekAnimation(weekProgressValue, j);
-
-            }
-        });
-
-        full.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attendanceProgressValue = attendanceProgressBar.getProgress();
-                weekProgressValue = weekProgressBar.getProgress();
-
-                attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, 10000);
-                attendanceAnimation.setDuration(1000);
-                attendanceProgressBar.startAnimation(attendanceAnimation);
-
-                attendanceProgressValue = attendanceProgressValue / 100;
-
-                startAttendanceAnimation(attendanceProgressValue, 100);
-
-                weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, 1200);
-                weekAnimation.setDuration(1000);
-                weekProgressBar.startAnimation(weekAnimation);
-
-                weekProgressValue = weekProgressValue / 100;
-
-                startWeekAnimation(weekProgressValue, 12);
-            }
-        });
 
     }
 
-    private void refreshAttendanceProgress(){
+    private void refreshAttendanceProgress() {
         dbAccess = DatabaseAccess.getInstance(getApplicationContext());
         dbAccess.open();
         ArrayList<Attendance> attend = dbAccess.getAttendance();
         final double allRecords = attend.size();
         final double present = dbAccess.getPresentCount();
         final double absent = dbAccess.getAbsentCount();
-        Log.d("TEST7", "allRecords= "+allRecords+" present= "+present);
+        Log.d("TEST7", "allRecords= " + allRecords + " present= " + present);
         attendanceProgressValue = attendanceProgressBar.getProgress();
         weekProgressValue = weekProgressBar.getProgress();
 
-        double a = ((present/allRecords)*100);
+        double a = ((present / allRecords) * 100);
         int b = (int) a;
-        int c = b*100;
+        int c = b * 100;
 
         attendingText.setText(String.valueOf((int) (present)));
         absentText.setText(String.valueOf((int) (absent)));
@@ -196,6 +131,16 @@ public class DashboardActivity extends Activity {
         attendanceProgressValue = attendanceProgressValue / 100;
 
         startAttendanceAnimation(attendanceProgressValue, b);
+
+        weekProgressValue = weekProgressBar.getProgress();
+
+        weekAnimation = new ProgressBarAnimation(weekProgressBar, weekProgressValue, 1300);
+        weekAnimation.setDuration(1000);
+        weekProgressBar.startAnimation(weekAnimation);
+
+        weekProgressValue = weekProgressValue / 100;
+
+        startWeekAnimation(weekProgressValue, 13);
     }
 
     private void setDateText() {
@@ -209,12 +154,12 @@ public class DashboardActivity extends Activity {
         Date dd = new Date();
         String month = sdm.format(dd);
 
-        String sDate = dayOfTheWeek +", "+c.get(Calendar.DAY_OF_MONTH)+" "+month+" "+c.get(Calendar.YEAR);
+        String sDate = dayOfTheWeek + ", " + c.get(Calendar.DAY_OF_MONTH) + " " + month + " " + c.get(Calendar.YEAR);
 
         dateText.setText(sDate);
     }
 
-    private void fillAttendanceProgress(){
+    private void fillAttendanceProgress() {
         dbAccess.open();
         ArrayList<Attendance> a = dbAccess.getAttendance();
         int allRecords = a.size();
@@ -249,7 +194,7 @@ public class DashboardActivity extends Activity {
         animator.start();
     }
 
-    private void drawChart(){
+    private void drawChart() {
         Log.d("TEST7", "drawGraph Started");
         graph.removeAllSeries();
 
@@ -258,22 +203,25 @@ public class DashboardActivity extends Activity {
         ArrayList<Progress> allProgress = dbAccess.getAllProgress();
         dbAccess.close();
 
-        int badCounter=0;
-        int averageCounter=0;
-        int goodCounter=0;
+        int badCounter = 0;
+        int averageCounter = 0;
+        int goodCounter = 0;
 
-        for(Progress p: allProgress){
-            switch (p.getProgress()){
-                case "Bad": badCounter++;
+        for (Progress p : allProgress) {
+            switch (p.getProgress()) {
+                case "Bad":
+                    badCounter++;
                     break;
-                case "Average": averageCounter++;
+                case "Average":
+                    averageCounter++;
                     break;
-                case "Good": goodCounter++;
+                case "Good":
+                    goodCounter++;
                     break;
             }
         }
 
-        Log.d("Counters", "BAD:"+badCounter+"AV: "+averageCounter+"GOOD: "+goodCounter);
+        Log.d("Counters", "BAD:" + badCounter + "AV: " + averageCounter + "GOOD: " + goodCounter);
 
         DataPoint[] dp = new DataPoint[4];
         dp[0] = new DataPoint(0, 0);
@@ -283,16 +231,17 @@ public class DashboardActivity extends Activity {
 
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {"","Bad", "Average", "Good", ""});
+        staticLabelsFormatter.setHorizontalLabels(new String[]{"", "Bad", "Average", "Good", ""});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
         series = new BarGraphSeries<>(dp);
-        series.setSpacing(5);
+        series.setSpacing(45);
+        series.setColor(Color.parseColor("#00FF00"));
         graph.addSeries(series);
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         refreshAttendanceProgress();
 
