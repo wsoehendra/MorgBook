@@ -2,6 +2,7 @@ package com.willnjames.android.morgbook;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -250,6 +251,7 @@ public class DashboardActivity extends Activity {
 
     private void drawChart(){
         Log.d("TEST7", "drawGraph Started");
+        graph.removeAllSeries();
 
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
