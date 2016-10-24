@@ -110,20 +110,20 @@ public class DatabaseAccess {
         }
     }
 
-    public int getAbsentCount(){
+    public int getAbsentCount() {
         Cursor cursor = database.rawQuery("SELECT * FROM ATTENDANCE WHERE STATUS = 'Absent' OR 'Explained Absence'", null);
         return cursor.getCount();
     }
 
     //Get a Student's Progress
-    public ArrayList<Progress> getStudentProgress(int ZID){
+    public ArrayList<Progress> getStudentProgress(int ZID) {
         ArrayList<Progress> progressList = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM PROGRESS WHERE Z_ID="+ZID+" ORDER BY WEEKNO",null);
+        Cursor cursor = database.rawQuery("SELECT * FROM PROGRESS WHERE Z_ID=" + ZID + " ORDER BY WEEKNO", null);
         cursor.moveToFirst();
-        if(cursor.getCount() == 0){
+        if (cursor.getCount() == 0) {
             return null;
         }
-        while(!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast()) {
             Progress p = new Progress(
                     cursor.getInt(0),
                     cursor.getInt(1),
@@ -138,8 +138,8 @@ public class DatabaseAccess {
         return progressList;
     }
 
-    public Person getPerson(int zID){
-        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE Z_ID='"+zID+"'", null);
+    public Person getPerson(int zID) {
+        Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE Z_ID='" + zID + "'", null);
         cursor.moveToFirst();
         Person p = new Person(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
         cursor.close();
@@ -199,25 +199,14 @@ public class DatabaseAccess {
 
     public void addMeeting(Meeting m) {
         Cursor checkIfExists = database.rawQuery("SELECT * FROM MEETINGS", null);
-        if (checkIfExists.getCount() == 0) {
-            try {
-                String sqlCommand = "INSERT INTO MEETINGS (STU_ZID, STA_ZID, DATE, START_TIME, END_TIME, TOPIC, ROOM) " +
-                        "VALUES ('" + m.getStudentZID() + "','" + m.getStaffZID() + "','" + m.getDate() + "','" + m.getStartTime() + "','" + m.getEndTime() + "','" + m.getTopic() + "','" + m.getRoom() + "')";
-                database.execSQL(sqlCommand);
-                Log.d("QUERY|ADD", "Adding Meeting Successful!" + "\n" + m.toString());
-            } catch (Exception e) {
-                Log.d("QUERY|ADD", "Adding Meeting Failed!" + "\n" + e.toString());
-            }
-        } else if (checkIfExists.getCount() > 0) {
-            try {
-                /*String sqlCommand = "UPDATE MEETING " +
-                        "SET STATUS='" + a.getStatus() + "' " +
-                        "WHERE Z_ID='" + a.getZ_ID() + "' AND WEEKNO='" + a.getWeekNo() + "'";
-                database.execSQL(sqlCommand);*/
-                Log.d("QUERY|ADD", "Updating Meeting Successful!" + "\n" + m.toString());
-            } catch (Exception e) {
-                Log.d("QUERY|ADD", "Updating Meeting Failed!" + "\n" + e.toString());
-            }
+        try {
+            String sqlCommand = "INSERT INTO MEETINGS (STU_ZID, STA_ZID, DATE, START_TIME, END_TIME, TOPIC, ROOM) " +
+                    "VALUES ('" + m.getStudentZID() + "','" + m.getStaffZID() + "','" + m.getDate() + "','" + m.getStartTime() + "','" + m.getEndTime() + "','" + m.getTopic() + "','" + m.getRoom() + "')";
+            database.execSQL(sqlCommand);
+            Log.d("QUERY|ADD", "Adding Meeting Successful!" + "\n" + m.toString());
+        } catch (Exception e) {
+            Log.d("QUERY|ADD", "Adding Meeting Failed!" + "\n" + e.toString());
         }
     }
+
 }

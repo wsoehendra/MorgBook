@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -25,7 +26,6 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.alamkanak.weekview.WeekViewLoader;
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
-import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Meeting;
 
 import org.w3c.dom.Text;
@@ -47,7 +47,6 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
 
-    DatabaseAccess dbAccess;
 
     private TextView dateText;
 
@@ -63,10 +62,11 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
     private TimePicker startTimePicker;
     private TimePicker endTimePicker;
 
-
     private String datemonth;
     private String start;
     private String end;
+
+    DatabaseAccess dbAccess;
 
     private int startHour;
     private int startMinute;
@@ -143,8 +143,6 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
                 Button button = (Button) dialog.findViewById(R.id.button);
 
-
-                //Create a New Event
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -174,18 +172,19 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                         startTime.set(Calendar.MINUTE, startMinute);
 
                         Calendar endTime = (Calendar) startTime.clone();
-                        endTime.set(Calendar.HOUR, endHour-12);
+                        endTime.set(Calendar.HOUR, endHour);
                         endTime.set(Calendar.MINUTE, endMinute);
 
-                        String eventInfo = "z5001002" + "\n" +topicEntry;
+                        String eventInfo = "z5001001" + "\n" +topicEntry;
 
                         WeekViewEvent event = new WeekViewEvent(0, eventInfo, startTime, endTime);
                         mNewEvents.add(event);
                         getWeekView().notifyDatasetChanged();
 
+
                         String evenMoreInfo = eventInfo + "\n" + "Location: "+locationEntry+ "\n" + meetingDate+"/"+meetingMonth+ "\n"+ startHour+":"+startMinute+ " - " +endHour+":"+endMinute;
 
-                        Meeting meeting = new Meeting(5010002, 5010000 , datemonth, start, end, topicEntry, locationEntry);
+                        Meeting meeting = new Meeting(5010001, 5018453, datemonth, start, end, topicEntry, locationEntry);
                         dbAccess.open();
                         dbAccess.addMeeting(meeting);
                         dbAccess.close();
@@ -195,7 +194,6 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                         dialog.dismiss();
                     }
                 });
-                //End Create Event
             }
         });
 
@@ -329,51 +327,12 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
         testLabel.setText(getEventTitle(time));
 
     }
+    List<WeekViewEvent> events;
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
-
         List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-        //Where the Population starts
-        dbAccess = DatabaseAccess.getInstance(this);
-        dbAccess.open();
-        ArrayList<Meeting> meeting = dbAccess.getMeeting();
-        dbAccess.close();
-
-        for(int i=0;i<meeting.size();i++) {
-
-            String q = meeting.get(i).getDate();
-            String[] parts = q.split("/");
-            String part1 = parts[0];
-            String part2 = parts[1];
-
-            String w = meeting.get(i).getStartTime();
-            String[] parts2 = w.split(":");
-            String part3 = parts2[0];
-            String part4 = parts2[1];
-
-            String e = meeting.get(i).getEndTime();
-            String[] parts3 = e.split(":");
-            String part5 = parts3[0];
-            String part6 = parts3[1];
-
-            Calendar startTime = Calendar.getInstance();
-            startTime.set(Calendar.DAY_OF_MONTH, Integer.valueOf(part1));
-            startTime.set(Calendar.MONTH, Integer.valueOf(part2));
-            startTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(part3));
-            startTime.set(Calendar.MINUTE, Integer.valueOf(part4));
-
-            Calendar endTime = (Calendar) startTime.clone();
-            endTime.set(Calendar.HOUR, Integer.valueOf(part5)-12);
-            endTime.set(Calendar.MINUTE, Integer.valueOf(part6));
-
-            WeekViewEvent event = new WeekViewEvent(0, "Test Events", startTime, endTime);
-            events.add(event);
-        }
-        //Where the Population ends
-
         ArrayList<WeekViewEvent> newEvents = getNewEvents(newYear, newMonth);
 
         events.addAll(newEvents);
