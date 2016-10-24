@@ -34,6 +34,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
 
+    //Android-GraphView by Jonas Gehring
+    //From http://www.android-graphview.org/
     compile 'com.jjoe64:graphview:4.2.1'
 
     testCompile 'junit:junit:4.12'
