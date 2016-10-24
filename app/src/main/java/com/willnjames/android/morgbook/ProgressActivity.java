@@ -115,7 +115,9 @@ public class ProgressActivity extends Activity {
                     dbAccess.close();
 
                     dbAccess.open();
-                    progressList.clear();
+                    if(progressList != null){
+                        progressList.clear();
+                    }
                     progressList = dbAccess.getStudentProgress(selectedStudent.getZ_ID());
                     Log.d("TEST6", "After Click: "+progressList.toString());
                     dbAccess.close();
