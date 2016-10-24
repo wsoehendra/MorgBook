@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.alamkanak.weekview.WeekViewLoader;
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
 import com.willnjames.android.morgbook.Model.Meeting;
+import com.willnjames.android.morgbook.Model.Person;
 
 import org.w3c.dom.Text;
 
@@ -78,22 +80,40 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
     String[] topic;
 
     private Spinner topicSpinner;
+    private Spinner studentSpinner;
     private EditText locationText;
+
+    private String studentEntry;
 
     private String topicEntry;
     private String locationEntry;
 
     private TextView selectedEvent;
 
+    private ArrayList<String> students = new ArrayList<>();
 
+    private ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meetings_activity);
 
+
         dbAccess = DatabaseAccess.getInstance(this);
 
         topic = new String[]{"General", "Assignment", "Consultation", "Other"};
+
+        dbAccess.open();
+
+            ArrayList<Person> persons = dbAccess.getStudents();
+
+        dbAccess.close();
+
+        for(int i=0;i<persons.size();i++){
+            String st = String.valueOf(persons.get(i).getZ_ID());
+            students.add(st);
+        }
+
 
         dateText = (TextView) findViewById(R.id.dateText);
 
@@ -154,6 +174,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
             mNewEvents.add(event);
         }
 
+        adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, students);
 
         button = (Button) findViewById(R.id.button6);
 
@@ -178,9 +199,23 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                 endTimePicker.setIs24HourView(true);
 
                 topicSpinner = (Spinner) dialog.findViewById(R.id.spinner);
+                studentSpinner = (Spinner) dialog.findViewById(R.id.spinner2);
+
+                studentSpinner.setAdapter(adapter);
+
                 locationText = (EditText) dialog.findViewById(R.id.editText);
 
                 Button button = (Button) dialog.findViewById(R.id.button);
+
+                Button cancel = (Button) dialog.findViewById(R.id.button2);
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialog.dismiss();
+                    }
+                });
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -203,6 +238,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
                         locationEntry = String.valueOf(locationText.getText());
                         topicEntry = topicSpinner.getSelectedItem().toString();
+                        studentEntry = studentSpinner.getSelectedItem().toString();
 
                         Calendar startTime = Calendar.getInstance();
                         startTime.set(Calendar.DAY_OF_MONTH, meetingDate);
@@ -214,7 +250,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                         endTime.set(Calendar.HOUR, endHour);
                         endTime.set(Calendar.MINUTE, endMinute);
 
-                        String eventInfo = "z5001001 " + "\n" +topicEntry+"\n";
+                        String eventInfo = "z"+studentEntry+" " + "\n" +topicEntry+"\n";
 
                         WeekViewEvent event = new WeekViewEvent(0, eventInfo, locationEntry, startTime, endTime);
                         mNewEvents.add(event);
@@ -223,7 +259,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
                         String evenMoreInfo = eventInfo + "\n" + "Location: "+locationEntry+ "\n" + meetingDate+"/"+meetingMonth+ "\n"+ startHour+":"+startMinute+ " - " +endHour+":"+endMinute;
 
-                        Meeting meeting = new Meeting(5010001, 5018453, datemonth, start, end, topicEntry, locationEntry);
+                        Meeting meeting = new Meeting(Integer.valueOf(studentEntry), 5018453, datemonth, start, end, topicEntry, locationEntry);
                         dbAccess.open();
                         dbAccess.addMeeting(meeting);
                         dbAccess.close();
