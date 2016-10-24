@@ -7,29 +7,33 @@ package com.willnjames.android.morgbook.Model;
 public class Meeting {
 
     int m_ID;
-    int z_ID;
-    String location;
-    String dateTime;
-    String tutor; //??
+    int studentZID;
+    String room;
+    String date;
+    String startTime;
+    String endTime;
+    String topic;
+    int staffZID;
 
-
-    public Meeting (int m_ID, int z_ID, String location, String dateTime, String tutor){
-
+    public Meeting(int m_ID, int studentZID, int staffZID, String date, String startTime, String endTime, String topic, String room) {
         this.m_ID = m_ID;
-        this.z_ID = z_ID;
-        this.location = location;
-        this.dateTime = dateTime;
-        this.tutor = tutor;
-
+        this.studentZID = studentZID;
+        this.room = room;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.topic = topic;
+        this.staffZID = staffZID;
     }
 
-    public Meeting (int z_ID, String location, String dateTime, String tutor){
-
-        this.z_ID = z_ID;
-        this.location = location;
-        this.dateTime = dateTime;
-        this.tutor = tutor;
-
+    public Meeting(int studentZID, int staffZID, String date, String startTime, String endTime, String topic, String room) {
+        this.studentZID = studentZID;
+        this.room = room;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.topic = topic;
+        this.staffZID = staffZID;
     }
 
     public int getM_ID() {
@@ -40,43 +44,71 @@ public class Meeting {
         this.m_ID = m_ID;
     }
 
-    public int getZ_ID() {
-        return z_ID;
+    public int getStudentZID() {
+        return studentZID;
     }
 
-    public void setZ_ID(int z_ID) {
-        this.z_ID = z_ID;
+    public void setStudentZID(int studentZID) {
+        this.studentZID = studentZID;
     }
 
-    public String getLocation() {
-        return location;
+    public String getRoom() {
+        return room;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setRoom(String room) {
+        this.room = room;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getTutor() {
-        return tutor;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTutor(String tutor) {
-        this.tutor = tutor;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public int getStaffZID() {
+        return staffZID;
+    }
+
+    public void setStaffZID(int staffZID) {
+        this.staffZID = staffZID;
     }
 
     @Override
-    public String toString(){
-        return  ""+"\n"
-                +"Student: "+"z500000"+z_ID+"\n"
-                +"Time: "+dateTime+"\n"
-                +"Location: "+location+"\n";
+    public String toString() {
+        return
+                "Student: " + studentZID + "\n"
+                        + "Staff: " + staffZID + "\n"
+                        + "Date: " + date + "\n"
+                        + "Start: " + startTime + "\n"
+                        + "End: " + endTime + "\n"
+                        + "Topic: " + topic+"\n"
+                        + "Room: " + room;
     }
 }

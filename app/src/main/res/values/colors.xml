@@ -2,13 +2,13 @@
 <resources>
     <color name="colorPrimary">#ffc107</color>
     <color name="colorPrimaryDark">#ff9100</color>
-    <color name="colorAccent">#448aff</color>
+    <color name="colorAccent">#ffc107</color>
     <color name="event_color_01">#59dbe0</color>
     <color name="event_color_02">#f57f68</color>
     <color name="event_color_03">#87d288</color>
-    <color name="event_color_04">#f8b552</color>
+    <color name="event_color_04">#ffc107</color>
     <color name="toolbar">#efefef</color>
     <color name="toolbar_text">#8f000000</color>
     <color name="accent">#2789e4</color>
-    <color name="colorSecondary">#2D2D2D</color>
+    <color name="colorSecondary">#2d2d2d</color>
 </resources>

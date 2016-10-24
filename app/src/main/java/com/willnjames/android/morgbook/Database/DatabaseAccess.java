@@ -163,11 +163,60 @@ public class DatabaseAccess {
 //                String sqlCommand = "UPDATE PROGRESS " +
 //                        "SET PROGRESS='" + p.getProgress() + "','" + "NOTES='BLAH' " +
 //                        "WHERE Z_ID='" + p.getZ_ID() + "' AND WEEKNO='" + p.getWeekNo() + "'";
-                String sqlCommand = "UPDATE PROGRESS SET PROGRESS='"+p.getProgress()+"',NOTES='"+p.getNotes()+"' WHERE Z_ID="+p.getZ_ID()+" AND WEEKNO="+p.getWeekNo()+"";
+                String sqlCommand = "UPDATE PROGRESS SET PROGRESS='Bad',NOTES='N/A WHERE Z_ID=5010004 AND WEEKNO=4";
                 database.execSQL(sqlCommand);
                 Log.d("QUERY|ADD", "Updating Progress Successful!" + "\n" + p.toString());
             } catch (Exception e) {
                 Log.d("QUERY|ADD", "Updating Progress Failed!" + "\n" + e.toString());
+            }
+        }
+    }
+
+    //Meetings
+
+    public ArrayList<Meeting> getMeeting() {
+        ArrayList<Meeting> meetingList = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM MEETINGS", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Meeting m = new Meeting(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getInt(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7)
+            );
+            meetingList.add(m);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        Log.d("QUERY|GET", "All Meeting: " + meetingList.toString());
+        return meetingList;
+    }
+
+    public void addMeeting(Meeting m) {
+        Cursor checkIfExists = database.rawQuery("SELECT * FROM MEETINGS", null);
+        if (checkIfExists.getCount() == 0) {
+            try {
+                String sqlCommand = "INSERT INTO MEETINGS (STU_ZID, STA_ZID, DATE, START_TIME, END_TIME, TOPIC, ROOM) " +
+                        "VALUES ('" + m.getStudentZID() + "','" + m.getStaffZID() + "','" + m.getDate() + "','" + m.getStartTime() + "','" + m.getEndTime() + "','" + m.getTopic() + "','" + m.getRoom() + "')";
+                database.execSQL(sqlCommand);
+                Log.d("QUERY|ADD", "Adding Meeting Successful!" + "\n" + m.toString());
+            } catch (Exception e) {
+                Log.d("QUERY|ADD", "Adding Meeting Failed!" + "\n" + e.toString());
+            }
+        } else if (checkIfExists.getCount() > 0) {
+            try {
+                /*String sqlCommand = "UPDATE MEETING " +
+                        "SET STATUS='" + a.getStatus() + "' " +
+                        "WHERE Z_ID='" + a.getZ_ID() + "' AND WEEKNO='" + a.getWeekNo() + "'";
+                database.execSQL(sqlCommand);*/
+                Log.d("QUERY|ADD", "Updating Meeting Successful!" + "\n" + m.toString());
+            } catch (Exception e) {
+                Log.d("QUERY|ADD", "Updating Meeting Failed!" + "\n" + e.toString());
             }
         }
     }

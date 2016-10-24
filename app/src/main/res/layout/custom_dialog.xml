@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <DatePicker
+        android:id="@+id/datePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:headerDayOfMonthTextAppearance="@color/colorAccent"
+        style="@style/MyDatePickerStyle">
+    </DatePicker>
+
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datePicker1"
+        android:timePickerMode="spinner" >
+    </TimePicker>
+
+    <TimePicker
+        android:id="@+id/timePicker2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datePicker1"
+        android:layout_toRightOf="@+id/textView"
+        android:timePickerMode="spinner">
+    </TimePicker>
+
+    <Button
+        android:text="Create"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/rectangledark"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/button"
+        android:layout_below="@+id/timePicker1"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:text="to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePicker1"
+        android:layout_toEndOf="@+id/timePicker1"
+        android:layout_marginTop="100dp"
+        android:id="@+id/textView" />
+
+    <TextView
+        android:text="Location: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePicker1"
+        android:layout_toEndOf="@+id/timePicker2"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/textView6" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/textView6"
+        android:layout_alignStart="@+id/textView6"
+        android:id="@+id/editText" />
+
+    <TextView
+        android:text="Topic: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView7" />
+
+    <Spinner
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_marginTop="10dp"
+        android:entries="@array/spinnerItems"
+        android:id="@+id/spinner" />
+
+
+</RelativeLayout>

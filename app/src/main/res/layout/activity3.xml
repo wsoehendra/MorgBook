@@ -32,7 +32,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/location"
+        android:id="@+id/room"
         android:layout_alignBottom="@+id/locationMeetingLabel"
         android:layout_alignEnd="@+id/studentIdSpinner"
         android:layout_alignTop="@+id/locationMeetingLabel"
@@ -60,9 +60,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dateMeetingPicker"
-        android:layout_alignStart="@+id/location"
+        android:layout_alignStart="@+id/room"
         android:layout_marginTop="25dp"
-        android:layout_below="@+id/location"
+        android:layout_below="@+id/room"
         android:layout_alignBottom="@+id/timeMeetingLabel" />
 
 

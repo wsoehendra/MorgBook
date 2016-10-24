@@ -80,15 +80,6 @@ public class DashboardActivity extends Activity {
         attendanceTextCount.setText("0");
         weekTextCount.setText("0");
 
-        for(int q=0; q < 10; q++){
-
-            int id = q;
-            String time = "0"+q+":00 PM";
-            String location = "Room "+q;
-
-            Meeting meeting = new Meeting(id, time, location, "Morgan");
-            meetingItems.add(meeting);
-        }
 
         ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, meetingItems);
         meetingList.setAdapter(adapter);
