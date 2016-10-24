@@ -1,8 +1,6 @@
 package com.willnjames.android.morgbook;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,29 +10,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.jjoe64.graphview.series.OnDataPointTapListener;
-import com.jjoe64.graphview.series.Series;
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
 import com.willnjames.android.morgbook.Model.Person;
 import com.willnjames.android.morgbook.Model.Progress;
 import com.willnjames.android.morgbook.Model.RVAdapter;
 
-import org.w3c.dom.Text;
-
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,8 +40,8 @@ public class ProgressActivity extends Activity {
 
     GraphView graph;
     LineGraphSeries<DataPoint> series;
-    Person selection;
-    ArrayList<Progress> pList;
+    Person selectedStudent;
+    ArrayList<Progress> progressList;
 
     TextView detailHeading;
     Spinner weekSpinner;
@@ -115,19 +102,26 @@ public class ProgressActivity extends Activity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(selection == null){
+                if(selectedStudent == null){
                     return;
                 }
                 inStudentNotes = String.valueOf(notesEditText.getText());
                 if(validateSubmit() == false){
-                    Log.d("TEST6", "Can't submit");
+                    Log.d("TEST6", "Submit Invalidated");
                 } else {
-                    Progress inProg = new Progress (selection.getZ_ID(), inStudentProgress, inWeek, inStudentNotes);
+                    Progress inProg = new Progress (selectedStudent.getZ_ID(), inStudentProgress, inWeek, inStudentNotes);
                     dbAccess.open();
                     dbAccess.addProgress(inProg);
                     dbAccess.close();
+
+                    dbAccess.open();
+                    progressList.clear();
+                    progressList = dbAccess.getStudentProgress(selectedStudent.getZ_ID());
+                    Log.d("TEST6", "After Click: "+progressList.toString());
+                    dbAccess.close();
+
                     initializeWeekSpinner();
-                    setProgressSelection(selection.getZ_ID());
+                    drawGraph();
                     validate = true;
                     errorText.setText("");
                     inWeek = 0;
@@ -172,16 +166,17 @@ public class ProgressActivity extends Activity {
     }
 
     private boolean validateSubmit(){
-        if(pList == null){
+        if(progressList == null){
             if(inWeek != 1){
-                errorText.setText("Entries can only be added for the next consecutive week.");
-                return false;
+                inWeek = 1;
+                errorText.setText("Progress added as Week 1.");
+                return true;
             } else {
                 return true;
             }
         }
         validate = true;
-        if(selection == null){
+        if(selectedStudent == null){
             Log.d("TEST6", "Invalidated: no Selection.");
             errorText.setText("Please select a Student");
             validate = false;
@@ -189,7 +184,7 @@ public class ProgressActivity extends Activity {
             Log.d("TEST6", "Invalidated: inWeek == 0");
             errorText.setText("Please Select a Week");
             validate = false;
-        } else if (inWeek > pList.size()+1){
+        } else if (inWeek > progressList.size()+1){
             Log.d("TEST6", "Invalidated: inWeek is 2 after the last entry");
             errorText.setText("Entries can only be added for the next consecutive week.");
             validate = false;
@@ -240,14 +235,15 @@ public class ProgressActivity extends Activity {
         weekSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(selection == null){
-                    //Error text
-                    return;
-                } else if(i==0){
+                if(selectedStudent == null){
+                    errorText.setText("Please Select a Student");
                     return;
                 }
                 switch (i){
                     case 0: Log.d("TEST6", "Spinner #0 Selected!");
+                        inWeek = 0;
+                        progressSpinner.setSelection(1);
+                        notesEditText.setText("");
                         break;
                     case 1: Log.d("TEST6", "Spinner #1 Selected!");
                         inWeek = 1;
@@ -308,17 +304,17 @@ public class ProgressActivity extends Activity {
     }
 
     private void populateFields(){
-        if(pList == null){
+        if(progressList == null){
+            errorText.setText("Please Select a Student");
             return;
-        }
-        if(selection == null){
+        } else if(selectedStudent == null){
             return;
         } else if(weekSpinner.getSelectedItem() == null){
             return;
-        } else if(inWeek > pList.size()){
+        } else if(inWeek > progressList.size()){
             return;
         } else {
-            Progress p = pList.get(inWeek - 1);
+            Progress p = progressList.get(inWeek - 1);
             switch (p.getProgress()) {
                 case "Bad":
                     progressSpinner.setSelection(0);
@@ -342,28 +338,36 @@ public class ProgressActivity extends Activity {
     public void setProgressSelection(int zID){
         errorText.setText("");
         weekSpinner.setSelection(0);
+
         String fullName;
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
-        pList = dbAccess.getStudentProgress(zID);
-        selection = dbAccess.getPerson(zID);
-        fullName = selection.getLName().toUpperCase()+", "+selection.getFName();
-        if(pList == null){
+        progressList = dbAccess.getStudentProgress(zID);
+        selectedStudent = dbAccess.getPerson(zID);
+        Log.d("TEST6", "pLIST: "+progressList.toString());
+        fullName = selectedStudent.getLName().toUpperCase()+", "+ selectedStudent.getFName();
+        dbAccess.close();
+
+        if(progressList == null){
             graph.removeAllSeries();
             detailHeading.setText("No Data for "+fullName);
             weekSpinner.setSelection(0);
             progressSpinner.setSelection(1);
             notesEditText.setText("");
             return;
+        } else {
+            detailHeading.setText("Weekly Progress for "+fullName);
+            drawGraph();
         }
-        dbAccess.close();
+    }
 
-        DataPoint[] dp = new DataPoint[pList.size()];
-
-        for(int i=0;i<pList.size();i++){
+    private void drawGraph(){
+        Log.d("TEST6", "drawGraph Started");
+        DataPoint[] dp = new DataPoint[progressList.size()];
+        for(int i = 0; i< progressList.size(); i++){
             double y = -1;
 
-            switch(pList.get(i).getProgress()){
+            switch(progressList.get(i).getProgress()){
                 case "Bad": y=0;
                     break;
                 case "Average": y=5;
@@ -374,7 +378,7 @@ public class ProgressActivity extends Activity {
             }
 
             double x;
-            x = pList.get(i).getWeekNo();
+            x = progressList.get(i).getWeekNo();
             DataPoint d = new DataPoint(x,y);
             dp[i] = d;
         }
@@ -384,10 +388,9 @@ public class ProgressActivity extends Activity {
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(13);
 
-        detailHeading.setText("Weekly Progress for "+fullName);
         clearGraph();
         graph.addSeries(series);
-
+        Log.d("TEST6", "Graph Drawn");
     }
 
 }
