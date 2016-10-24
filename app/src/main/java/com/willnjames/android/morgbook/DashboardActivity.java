@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -123,7 +124,6 @@ public class DashboardActivity extends Activity {
             }
         });
 
-
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,9 +182,7 @@ public class DashboardActivity extends Activity {
         weekProgressValue = weekProgressBar.getProgress();
 
         double a = ((present/allRecords)*100);
-        Log.d("TEST7", "a="+a);
         int b = (int) a;
-        Log.d("TEST7", "b="+b);
         int c = b*100;
 
         attendingText.setText(String.valueOf((int) (present)));
@@ -273,12 +271,21 @@ public class DashboardActivity extends Activity {
             }
         }
 
-        DataPoint[] dp = new DataPoint[3];
-        dp[0] = new DataPoint(0, badCounter);
-        dp[1] = new DataPoint(1, averageCounter);
-        dp[2] = new DataPoint(2, goodCounter);
+        Log.d("Counters", "BAD:"+badCounter+"AV: "+averageCounter+"GOOD: "+goodCounter);
+
+        DataPoint[] dp = new DataPoint[4];
+        dp[0] = new DataPoint(0, 0);
+        dp[1] = new DataPoint(2, badCounter);
+        dp[2] = new DataPoint(4, averageCounter);
+        dp[3] = new DataPoint(6, goodCounter);
+
+
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"","Bad", "Average", "Good", ""});
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
         series = new BarGraphSeries<>(dp);
+        series.setSpacing(5);
         graph.addSeries(series);
     }
 
@@ -287,8 +294,6 @@ public class DashboardActivity extends Activity {
         super.onResume();
         refreshAttendanceProgress();
 
-        dbAccess = DatabaseAccess.getInstance(this);
-        dbAccess.open();
-
+        drawChart();
     }
 }

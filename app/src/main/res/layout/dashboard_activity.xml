@@ -102,24 +102,6 @@
         android:layout_marginTop="30dp"
         android:id="@+id/reminderLabel" />
 
-    <TextView
-        android:text="Meetings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topImage"
-        android:background="@drawable/rectangle"
-        android:textColor="@color/colorSecondary"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="720dp"
-        android:layout_marginTop="30dp"
-        android:id="@+id/meetingsLabel" />
-
     <ImageView
         android:layout_width="200dp"
         android:layout_height="300dp"
@@ -282,14 +264,6 @@
         android:layout_below="@+id/weekLabel"
         android:layout_alignStart="@+id/weekLabel" />
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/rectanglewhite"
-        android:id="@+id/assignmentsBG"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/progressBG" />
-
     <TextView
         android:text="Asssignments"
         android:layout_width="wrap_content"
@@ -331,22 +305,6 @@
         android:layout_below="@+id/button2"
         android:layout_alignStart="@+id/button2" />
 
-    <ImageView
-        android:layout_width="210dp"
-        android:layout_height="470dp"
-        android:src="@drawable/rectanglewhite"
-        android:id="@+id/meetingsBG"
-        android:layout_below="@+id/meetingsLabel"
-        android:layout_alignStart="@+id/meetingsLabel"
-        android:layout_alignBottom="@+id/meetingsList" />
-
-    <ListView
-        android:id="@+id/meetingsList"
-        android:layout_width="210dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/meetingsLabel"
-        android:layout_alignStart="@+id/meetingsLabel" />
-
     <TextView
         android:text="Student Progress"
         android:layout_width="wrap_content"
@@ -370,7 +328,43 @@
         android:paddingTop="15dp"
         android:layout_below="@+id/ProgressLabel"
         android:layout_alignStart="@+id/ProgressLabel"
-        android:layout_alignBottom="@+id/button3" />
+        android:background="#FFFFFF"
+        android:layout_marginRight="25dp"
+        android:layout_alignBottom="@+id/assignmentsBG" />
+
+    <ImageView
+        android:layout_width="210dp"
+        android:layout_height="470dp"
+        android:src="@drawable/rectanglewhite"
+        android:id="@+id/meetingsBG"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_alignBottom="@+id/remindersBG"
+        android:layout_alignTop="@+id/remindersBG" />
+
+    <TextView
+        android:text="Meetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle"
+        android:textColor="@color/colorSecondary"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:id="@+id/meetingsLabel"
+        android:layout_above="@+id/meetingsBG"
+        android:layout_alignStart="@+id/meetingsBG" />
+
+    <ListView
+        android:id="@+id/meetingsList"
+        android:layout_width="210dp"
+        android:layout_height="200dp"
+        android:layout_alignStart="@+id/meetingsBG"
+        android:layout_alignBottom="@+id/meetingsBG"
+        android:layout_below="@+id/meetingsLabel" />
 
     <Button
         android:text="New"
@@ -382,6 +376,15 @@
         android:id="@+id/createMeetingButton"
         android:layout_above="@+id/meetingsBG"
         android:layout_alignEnd="@+id/meetingsBG" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/rectanglewhite"
+        android:id="@+id/assignmentsBG"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/progressBG"
+        android:layout_marginBottom="29dp" />
 
 
 </RelativeLayout>
