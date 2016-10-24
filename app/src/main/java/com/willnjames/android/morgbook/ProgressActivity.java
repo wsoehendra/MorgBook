@@ -65,6 +65,7 @@ public class ProgressActivity extends Activity {
     String inStudentNotes;
     int inWeek;
     Button submitButton;
+    TextView errorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class ProgressActivity extends Activity {
         rv.setAdapter(adapter);
 
         detailHeading = (TextView) findViewById(R.id.detailHeadingTextView);
+        errorText = (TextView) findViewById(R.id.errorTextView);
         graph = (GraphView) findViewById(R.id.progressGraph);
 
         graph.getViewport().setMinX(1);
@@ -116,11 +118,16 @@ public class ProgressActivity extends Activity {
                     return;
                 }
                 inStudentNotes = String.valueOf(notesEditText.getText());
-                Progress inProg = new Progress (selection.getZ_ID(), inStudentProgress, inWeek, inStudentNotes);
-                dbAccess.open();
-                dbAccess.addProgress(inProg);
-                dbAccess.close();
-                initializeWeekSpinner();
+                if(validateSubmit() == false){
+                    Log.d("TEST6", "Can't submit");
+                } else {
+                    Progress inProg = new Progress (selection.getZ_ID(), inStudentProgress, inWeek, inStudentNotes);
+                    dbAccess.open();
+                    dbAccess.addProgress(inProg);
+                    dbAccess.close();
+                    initializeWeekSpinner();
+                    setProgressSelection(selection.getZ_ID());
+                }
             }
         });
     }
@@ -135,6 +142,7 @@ public class ProgressActivity extends Activity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         progressSpinner.setAdapter(dataAdapter);
+        progressSpinner.setSelection(1);
         progressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -158,6 +166,27 @@ public class ProgressActivity extends Activity {
         });
     }
 
+    private boolean validateSubmit(){
+        if(pList == null){
+            return true;
+        }
+        boolean validate = true;
+        if(selection == null){
+            Log.d("TEST6", "Invalidated: no Selection.");
+            errorText.setText("Please select a Student");
+            validate = false;
+        } else if (inWeek == 0) {
+            Log.d("TEST6", "Invalidated: inWeek == 0");
+            errorText.setText("Please Select a Week");
+            validate = false;
+        } else if (inWeek > pList.size()+1){
+            Log.d("TEST6", "Invalidated: inWeek is 2 after the last entry");
+            errorText.setText("Entries can only be added for the next consecutive week.");
+            validate = false;
+        }
+        return validate;
+    }
+
 
     private void setDateText() {
         dateText = (TextView) findViewById(R.id.dateText);
@@ -176,6 +205,7 @@ public class ProgressActivity extends Activity {
     private void initializeWeekSpinner(){
         weekSpinner = (Spinner) findViewById(R.id.weekSpinner);
         List<String> list = new ArrayList<String>();
+        list.add("Select");
         list.add("Week 1");
         list.add("Week 2");
         list.add("Week 3");
@@ -192,6 +222,7 @@ public class ProgressActivity extends Activity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         weekSpinner.setAdapter(dataAdapter);
+        weekSpinner.setSelection(0);
         weekSpinnerListener();
     }
 
@@ -200,44 +231,61 @@ public class ProgressActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(selection == null){
+                    //Error text
+                    return;
+                } else if(i==0){
                     return;
                 }
                 switch (i){
-                    case 0: Log.d("TEST6", "Spinner #1 Selected!");
+                    case 0: Log.d("TEST6", "Spinner #0 Selected!");
+                        break;
+                    case 1: Log.d("TEST6", "Spinner #1 Selected!");
                         inWeek = 1;
+                        populateFields();
                         break;
-                    case 1: Log.d("TEST6", "Spinner #2 Selected!");
+                    case 2: Log.d("TEST6", "Spinner #2 Selected!");
                         inWeek = 2;
+                        populateFields();
                         break;
-                    case 2: Log.d("TEST6", "Spinner #3 Selected!");
+                    case 3: Log.d("TEST6", "Spinner #3 Selected!");
                         inWeek = 3;
+                        populateFields();
                         break;
-                    case 3: Log.d("TEST6", "Spinner #4 Selected!");
+                    case 4: Log.d("TEST6", "Spinner #4 Selected!");
                         inWeek = 4;
+                        populateFields();
                         break;
-                    case 4: Log.d("TEST6", "Spinner #5 Selected!");
+                    case 5: Log.d("TEST6", "Spinner #5 Selected!");
                         inWeek = 5;
+                        populateFields();
                         break;
-                    case 5: Log.d("TEST6", "Spinner #6 Selected!");
+                    case 6: Log.d("TEST6", "Spinner #6 Selected!");
                         inWeek = 6;
+                        populateFields();
                         break;
-                    case 6: Log.d("TEST6", "Spinner #7 Selected!");
+                    case 7: Log.d("TEST6", "Spinner #7 Selected!");
                         inWeek = 7;
+                        populateFields();
                         break;
-                    case 7: Log.d("TEST6", "Spinner #8 Selected!");
+                    case 8: Log.d("TEST6", "Spinner #8 Selected!");
                         inWeek = 8;
+                        populateFields();
                         break;
-                    case 8: Log.d("TEST6", "Spinner #9 Selected!");
+                    case 9: Log.d("TEST6", "Spinner #9 Selected!");
                         inWeek = 9;
+                        populateFields();
                         break;
-                    case 9: Log.d("TEST6", "Spinner #10 Selected!");
+                    case 10: Log.d("TEST6", "Spinner #10 Selected!");
                         inWeek = 10;
+                        populateFields();
                         break;
-                    case 10: Log.d("TEST6", "Spinner #11 Selected!");
+                    case 11: Log.d("TEST6", "Spinner #11 Selected!");
                         inWeek = 11;
+                        populateFields();
                         break;
-                    case 11: Log.d("TEST6", "Spinner #12 Selected!");
+                    case 12: Log.d("TEST6", "Spinner #12 Selected!");
                         inWeek = 12;
+                        populateFields();
                         break;
                 }
             }
@@ -249,6 +297,33 @@ public class ProgressActivity extends Activity {
         });
     }
 
+    private void populateFields(){
+        if(pList == null){
+            return;
+        }
+        if(selection == null){
+            return;
+        } else if(weekSpinner.getSelectedItem() == null){
+            return;
+        } else if(inWeek > pList.size()){
+            return;
+        } else {
+            Progress p = pList.get(inWeek - 1);
+            switch (p.getProgress()) {
+                case "Bad":
+                    progressSpinner.setSelection(0);
+                    break;
+                case "Average":
+                    progressSpinner.setSelection(1);
+                    break;
+                case "Good":
+                    progressSpinner.setSelection(2);
+                    break;
+            }
+            notesEditText.setText(p.getNotes());
+        }
+    }
+
     private void clearGraph(){
         graph.removeAllSeries();
     }
@@ -256,20 +331,21 @@ public class ProgressActivity extends Activity {
 
     public void setProgressSelection(int zID){
         String fullName;
-
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();
         pList = dbAccess.getStudentProgress(zID);
-        Log.d("TEST6", pList.toString());
+        selection = dbAccess.getPerson(zID);
+        fullName = selection.getLName().toUpperCase()+", "+selection.getFName();
         if(pList == null){
             graph.removeAllSeries();
-            detailHeading.setText("No Data for Selected Student");
+            detailHeading.setText("No Data for "+fullName);
+            weekSpinner.setSelection(0);
+            progressSpinner.setSelection(1);
+            notesEditText.setText("");
             return;
         }
-        selection = dbAccess.getPerson(zID);
         dbAccess.close();
 
-        fullName = selection.getLName().toUpperCase()+", "+selection.getFName();
         DataPoint[] dp = new DataPoint[pList.size()];
 
         for(int i=0;i<pList.size();i++){

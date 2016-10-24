@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fafafa"
-    tools:context="com.willnjames.android.morgbook.MainActivity">
+    tools:context="com.willnjames.android.morgbook.MainActivity"
+    android:focusableInTouchMode="true">
 
 
     <RelativeLayout
@@ -163,16 +164,6 @@
                     android:layout_alignTop="@+id/textView8"
                     android:layout_toEndOf="@+id/textView8" />
 
-                <TextView
-                    android:text="Notes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView9"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@+id/progressSpinner"
-                    android:layout_alignParentStart="true"
-                    android:paddingLeft="5dp" />
-
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -194,6 +185,24 @@
                     android:layout_below="@+id/notesEditText"
                     android:layout_alignStart="@+id/notesEditText"
                     android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/submitButton"
+                    android:layout_alignStart="@+id/submitButton"
+                    android:id="@+id/errorTextView"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/event_color_02" />
+
+                <TextView
+                    android:text="Notes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView9"
+                    android:paddingLeft="5dp"
+                    android:layout_below="@+id/progressSpinner"
+                    android:layout_alignParentStart="true" />
 
             </RelativeLayout>
         </LinearLayout>
