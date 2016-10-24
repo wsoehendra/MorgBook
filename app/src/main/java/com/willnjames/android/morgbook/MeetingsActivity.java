@@ -50,8 +50,6 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
     private TextView dateText;
 
-    private TextView testLabel;
-
     private Button button;
 
     private ArrayList<WeekViewEvent> mNewEvents;
@@ -85,6 +83,8 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
     private String topicEntry;
     private String locationEntry;
 
+    private TextView selectedEvent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
         dateText = (TextView) findViewById(R.id.dateText);
 
-        testLabel = (TextView) findViewById(R.id.textView);
+        selectedEvent = (TextView) findViewById(R.id.textView11);
 
         Calendar c = Calendar.getInstance();
 
@@ -136,6 +136,10 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
             String part5 = parts3[0];
             String part6 = parts3[1];
 
+            String stu = "z"+String.valueOf(meet.get(i).getStudentZID());
+            String top = meet.get(i).getTopic();
+            String place = meet.get(i).getRoom();
+
             Calendar startTime = Calendar.getInstance();
             startTime.set(Calendar.DAY_OF_MONTH, Integer.valueOf(part1));
             startTime.set(Calendar.MONTH, Integer.valueOf(part2));
@@ -146,7 +150,7 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
             endTime.set(Calendar.HOUR, Integer.valueOf(part5));
             endTime.set(Calendar.MINUTE, Integer.valueOf(part6));
 
-            WeekViewEvent event = new WeekViewEvent(0, "Testing", startTime, endTime);
+            WeekViewEvent event = new WeekViewEvent(0, stu+" "+"\n"+top+"\n" , place, startTime, endTime);
             mNewEvents.add(event);
         }
 
@@ -210,9 +214,9 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                         endTime.set(Calendar.HOUR, endHour);
                         endTime.set(Calendar.MINUTE, endMinute);
 
-                        String eventInfo = "z5001001" + "\n" +topicEntry;
+                        String eventInfo = "z5001001 " + "\n" +topicEntry+"\n";
 
-                        WeekViewEvent event = new WeekViewEvent(0, eventInfo, startTime, endTime);
+                        WeekViewEvent event = new WeekViewEvent(0, eventInfo, locationEntry, startTime, endTime);
                         mNewEvents.add(event);
                         getWeekView().notifyDatasetChanged();
 
@@ -223,8 +227,6 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
                         dbAccess.open();
                         dbAccess.addMeeting(meeting);
                         dbAccess.close();
-
-                        testLabel.setText(evenMoreInfo);
 
                         dialog.dismiss();
                     }
@@ -345,21 +347,42 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
-        testLabel.setText(event.getName());
+        String str = event.getName();
+        String[] split = str.split(" ");
+        String p0 = split[0];
+        p0 = p0.trim();
+        String p1 = split[1];
+        p1 = p1.trim();
+        //Toast.makeText(this, p1+" Appointment", Toast.LENGTH_SHORT).show();
+
+        SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+        fmt.setCalendar(event.getStartTime());
+        String dateFormatted = fmt.format(event.getStartTime().getTime());
+
+        Calendar cal = event.getStartTime();
+        String a = String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + ":"+String.valueOf(cal.get(Calendar.MINUTE));
+
+        Calendar cale = event.getEndTime();
+        String b = String.valueOf(cale.get(Calendar.HOUR_OF_DAY)) + ":"+String.valueOf(cale.get(Calendar.MINUTE));
+
+
+        String info = "Student: "+p0+"\n"
+                        + "Time: "+a+ " - "+b+"\n"
+                        + "Topic: "+p1+"             "
+                        + "Location: "+event.getLocation();
+
+        selectedEvent.setText(info);
+        selectedEvent.setLineSpacing(0, 1.5f);
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
-        testLabel.setText(event.getName());
-
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
         Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
-        testLabel.setText(getEventTitle(time));
 
     }
     List<WeekViewEvent> events;
