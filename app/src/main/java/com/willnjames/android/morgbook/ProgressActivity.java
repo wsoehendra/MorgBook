@@ -336,6 +336,7 @@ public class ProgressActivity extends Activity {
 
 
     public void setProgressSelection(int zID){
+        Log.d("TEST6", "ProgressSelection started for: "+zID);
         errorText.setText("");
         weekSpinner.setSelection(0);
 
@@ -344,13 +345,13 @@ public class ProgressActivity extends Activity {
         dbAccess.open();
         progressList = dbAccess.getStudentProgress(zID);
         selectedStudent = dbAccess.getPerson(zID);
-        Log.d("TEST6", "pLIST: "+progressList.toString());
         fullName = selectedStudent.getLName().toUpperCase()+", "+ selectedStudent.getFName();
         dbAccess.close();
 
         if(progressList == null){
             graph.removeAllSeries();
             detailHeading.setText("No Data for "+fullName);
+            Log.d("TEST6", "progressList is null for: "+zID);
             weekSpinner.setSelection(0);
             progressSpinner.setSelection(1);
             notesEditText.setText("");

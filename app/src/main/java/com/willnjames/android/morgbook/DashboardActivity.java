@@ -11,9 +11,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 import com.willnjames.android.morgbook.Database.DatabaseAccess;
 import com.willnjames.android.morgbook.Model.Attendance;
 import com.willnjames.android.morgbook.Model.Meeting;
+import com.willnjames.android.morgbook.Model.Progress;
 import com.willnjames.android.morgbook.Model.ProgressBarAnimation;
 
 import java.text.SimpleDateFormat;
@@ -48,6 +53,9 @@ public class DashboardActivity extends Activity {
     private TextView dateText;
 
     private ArrayList<Meeting> meetingItems;
+
+    GraphView graph;
+    BarGraphSeries<DataPoint> series;
 
     DatabaseAccess dbAccess;
 
@@ -88,6 +96,8 @@ public class DashboardActivity extends Activity {
 
         ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, meetingItems);
         meetingList.setAdapter(adapter);
+
+        graph = (GraphView) findViewById(R.id.progressGraph);
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,9 +250,45 @@ public class DashboardActivity extends Activity {
         animator.start();
     }
 
+    private void drawChart(){
+        Log.d("TEST7", "drawGraph Started");
+
+        dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+        ArrayList<Progress> allProgress = dbAccess.getAllProgress();
+        dbAccess.close();
+
+        int badCounter=0;
+        int averageCounter=0;
+        int goodCounter=0;
+
+        for(Progress p: allProgress){
+            switch (p.getProgress()){
+                case "Bad": badCounter++;
+                    break;
+                case "Average": averageCounter++;
+                    break;
+                case "Good": goodCounter++;
+                    break;
+            }
+        }
+
+        DataPoint[] dp = new DataPoint[3];
+        dp[0] = new DataPoint(0, badCounter);
+        dp[1] = new DataPoint(1, averageCounter);
+        dp[2] = new DataPoint(2, goodCounter);
+
+        series = new BarGraphSeries<>(dp);
+        graph.addSeries(series);
+    }
+
     @Override
     public void onResume(){
         super.onResume();
         refreshAttendanceProgress();
+
+        dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+
     }
 }

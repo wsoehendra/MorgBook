@@ -103,24 +103,6 @@
         android:id="@+id/reminderLabel" />
 
     <TextView
-        android:text="Asssignments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topImage"
-        android:background="@drawable/rectangle"
-        android:textColor="@color/colorSecondary"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="490dp"
-        android:layout_marginTop="300dp"
-        android:id="@+id/assignmentsLabel" />
-
-    <TextView
         android:text="Meetings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,7 +122,7 @@
 
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         android:layout_marginStart="30dp"
         android:src="@drawable/rectanglewhite"
         android:layout_below="@+id/attendanceLabel"
@@ -148,7 +130,7 @@
 
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         android:layout_marginStart="260dp"
         android:src="@drawable/rectanglewhite"
         android:layout_below="@+id/weekLabel"
@@ -160,23 +142,8 @@
         android:layout_marginStart="490dp"
         android:src="@drawable/rectanglewhite"
         android:layout_below="@+id/weekLabel"
-        android:id="@+id/remindersBG"/>
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="490dp"
-        android:src="@drawable/rectanglewhite"
-        android:layout_below="@+id/assignmentsLabel"
-        android:id="@+id/assignmentsBG"/>
-
-    <ImageView
-        android:layout_width="210dp"
-        android:layout_height="470dp"
-        android:layout_marginStart="720dp"
-        android:src="@drawable/rectanglewhite"
-        android:layout_below="@+id/meetingsLabel"
-        android:id="@+id/meetingsBG"/>
+        android:id="@+id/remindersBG"
+        android:layout_alignBottom="@+id/weeklyProgress" />
 
     <ProgressBar
         android:id="@+id/circularProgressbar"
@@ -288,59 +255,6 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="40dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Max"
-        android:id="@+id/button3"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toEndOf="@+id/button2" />
-
-    <Button
-        android:text="New"
-        android:layout_width="45dp"
-        android:layout_height="30dp"
-        android:textSize="11dp"
-        android:background="@drawable/rectangledark"
-        android:textColor="@color/colorPrimary"
-        android:layout_alignTop="@+id/meetingsBG"
-        android:layout_alignEnd="@+id/meetingsBG"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="12dp"
-        android:id="@+id/createMeetingButton" />
-
-    <ListView
-        android:id="@+id/meetingsList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/createMeetingButton"
-        android:layout_alignEnd="@+id/meetingsBG"
-        android:layout_alignStart="@+id/meetingsBG"
-        android:layout_alignBottom="@+id/meetingsBG"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Random"
-        android:id="@+id/button2"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/weekLabel"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="16dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reset"
-        android:id="@+id/resetButton"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toStartOf="@+id/button2" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -366,6 +280,107 @@
         android:progressDrawable="@drawable/circleprogress"
         android:layout_below="@+id/weekLabel"
         android:layout_alignStart="@+id/weekLabel" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/rectanglewhite"
+        android:id="@+id/assignmentsBG"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/progressBG" />
+
+    <TextView
+        android:text="Asssignments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle"
+        android:textColor="@color/colorSecondary"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:id="@+id/textView10"
+        android:layout_above="@+id/assignmentsBG"
+        android:layout_alignStart="@+id/assignmentsBG" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/resetButton"
+        android:layout_alignTop="@+id/assignmentsBG"
+        android:layout_alignStart="@+id/weekBG" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Random"
+        android:id="@+id/button2"
+        android:layout_below="@+id/resetButton"
+        android:layout_alignStart="@+id/resetButton"
+        android:layout_marginTop="18dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max"
+        android:id="@+id/button3"
+        android:layout_below="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
+
+    <ImageView
+        android:layout_width="210dp"
+        android:layout_height="470dp"
+        android:src="@drawable/rectanglewhite"
+        android:id="@+id/meetingsBG"
+        android:layout_below="@+id/meetingsLabel"
+        android:layout_alignStart="@+id/meetingsLabel"
+        android:layout_alignBottom="@+id/meetingsList" />
+
+    <ListView
+        android:id="@+id/meetingsList"
+        android:layout_width="210dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/meetingsLabel"
+        android:layout_alignStart="@+id/meetingsLabel" />
+
+    <TextView
+        android:text="Student Progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle"
+        android:textColor="@color/colorSecondary"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:id="@+id/ProgressLabel"
+        android:layout_alignBottom="@+id/missingLabel"
+        android:layout_alignStart="@+id/remindersBG" />
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/progressGraph"
+        android:paddingTop="15dp"
+        android:layout_below="@+id/ProgressLabel"
+        android:layout_alignStart="@+id/ProgressLabel"
+        android:layout_alignBottom="@+id/button3" />
+
+    <Button
+        android:text="New"
+        android:layout_width="45dp"
+        android:layout_height="30dp"
+        android:textSize="11dp"
+        android:background="@drawable/rectangledark"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/createMeetingButton"
+        android:layout_above="@+id/meetingsBG"
+        android:layout_alignEnd="@+id/meetingsBG" />
 
 
 </RelativeLayout>

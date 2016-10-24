@@ -143,6 +143,28 @@ public class DatabaseAccess {
         return progressList;
     }
 
+    public ArrayList<Progress> getAllProgress() {
+        ArrayList<Progress> progressList = new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM PROGRESS", null);
+        cursor.moveToFirst();
+        if (cursor.getCount() == 0) {
+            return null;
+        }
+        while (!cursor.isAfterLast()) {
+            Progress p = new Progress(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getInt(3),
+                    cursor.getString(4)
+            );
+            progressList.add(p);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return progressList;
+    }
+
     public Person getPerson(int zID) {
         Cursor cursor = database.rawQuery("SELECT * FROM PERSONS WHERE Z_ID='" + zID + "'", null);
         cursor.moveToFirst();
