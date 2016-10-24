@@ -115,6 +115,41 @@ public abstract class MeetingsActivity extends AppCompatActivity implements Week
 
         mNewEvents = new ArrayList<WeekViewEvent>();
 
+        dbAccess.open();
+        ArrayList<Meeting> meet = dbAccess.getMeeting();
+        dbAccess.close();
+
+        for(int i=0;i<meet.size();i++){
+
+            String q = meet.get(i).getDate();
+            String[] parts = q.split("/");
+            String part1 = parts[0];
+            String part2 = parts[1];
+
+            String w = meet.get(i).getStartTime();
+            String[] parts2 = w.split(":");
+            String part3 = parts2[0];
+            String part4 = parts2[1];
+
+            String e = meet.get(i).getEndTime();
+            String[] parts3 = e.split(":");
+            String part5 = parts3[0];
+            String part6 = parts3[1];
+
+            Calendar startTime = Calendar.getInstance();
+            startTime.set(Calendar.DAY_OF_MONTH, Integer.valueOf(part1));
+            startTime.set(Calendar.MONTH, Integer.valueOf(part2));
+            startTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(part3));
+            startTime.set(Calendar.MINUTE, Integer.valueOf(part4));
+
+            Calendar endTime = (Calendar) startTime.clone();
+            endTime.set(Calendar.HOUR, Integer.valueOf(part5));
+            endTime.set(Calendar.MINUTE, Integer.valueOf(part6));
+
+            WeekViewEvent event = new WeekViewEvent(0, "Testing", startTime, endTime);
+            mNewEvents.add(event);
+        }
+
 
         button = (Button) findViewById(R.id.button6);
 
