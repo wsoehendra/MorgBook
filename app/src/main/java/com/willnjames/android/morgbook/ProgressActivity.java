@@ -66,6 +66,7 @@ public class ProgressActivity extends Activity {
     int inWeek;
     Button submitButton;
     TextView errorText;
+    boolean validate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,10 @@ public class ProgressActivity extends Activity {
                     dbAccess.close();
                     initializeWeekSpinner();
                     setProgressSelection(selection.getZ_ID());
+                    validate = true;
+                    errorText.setText("");
+                    inWeek = 0;
+                    notesEditText.setText("");
                 }
             }
         });
@@ -168,9 +173,14 @@ public class ProgressActivity extends Activity {
 
     private boolean validateSubmit(){
         if(pList == null){
-            return true;
+            if(inWeek != 1){
+                errorText.setText("Entries can only be added for the next consecutive week.");
+                return false;
+            } else {
+                return true;
+            }
         }
-        boolean validate = true;
+        validate = true;
         if(selection == null){
             Log.d("TEST6", "Invalidated: no Selection.");
             errorText.setText("Please select a Student");
@@ -330,6 +340,8 @@ public class ProgressActivity extends Activity {
 
 
     public void setProgressSelection(int zID){
+        errorText.setText("");
+        weekSpinner.setSelection(0);
         String fullName;
         dbAccess = DatabaseAccess.getInstance(this);
         dbAccess.open();

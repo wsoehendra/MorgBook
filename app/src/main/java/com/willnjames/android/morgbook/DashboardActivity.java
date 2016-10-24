@@ -108,6 +108,12 @@ public class DashboardActivity extends Activity {
             }
         });
 
+        dbAccess = DatabaseAccess.getInstance(getApplicationContext());
+        dbAccess.open();
+        ArrayList<Attendance> attend = dbAccess.getAttendance();
+        int allRecords = attend.size();
+        int absentees = dbAccess.getAbsentCount();
+
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,17 +124,11 @@ public class DashboardActivity extends Activity {
                 int b = a.nextInt(101);
                 int c = b*100;
 
-                dbAccess = DatabaseAccess.getInstance(getApplicationContext());
-                dbAccess.open();
-                ArrayList<Attendance> attend = dbAccess.getAttendance();
-                int allRecords = attend.size();
-                int absentees = dbAccess.getAbsentCount();
-
                 attendanceAnimation = new ProgressBarAnimation(attendanceProgressBar, attendanceProgressValue, c);
                 attendanceAnimation.setDuration(1000);
                 attendanceProgressBar.startAnimation(attendanceAnimation);
 
-                attendanceProgressValue = absentees/allRecords;
+                attendanceProgressValue = attendanceProgressValue / 100;
 
                 startAttendanceAnimation(attendanceProgressValue, b);
 

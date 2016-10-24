@@ -163,7 +163,7 @@ public class DatabaseAccess {
 //                String sqlCommand = "UPDATE PROGRESS " +
 //                        "SET PROGRESS='" + p.getProgress() + "','" + "NOTES='BLAH' " +
 //                        "WHERE Z_ID='" + p.getZ_ID() + "' AND WEEKNO='" + p.getWeekNo() + "'";
-                String sqlCommand = "UPDATE PROGRESS SET PROGRESS='Bad',NOTES='N/A WHERE Z_ID=5010004 AND WEEKNO=4";
+                String sqlCommand = "UPDATE PROGRESS SET PROGRESS='Bad',NOTES='N/A' WHERE Z_ID=5010004 AND WEEKNO=4";
                 database.execSQL(sqlCommand);
                 Log.d("QUERY|ADD", "Updating Progress Successful!" + "\n" + p.toString());
             } catch (Exception e) {
