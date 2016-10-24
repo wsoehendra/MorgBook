@@ -69,11 +69,6 @@ public class DashboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
 
-        dbAccess = DatabaseAccess.getInstance(this);
-        dbAccess.open();
-        meetingItems = dbAccess.getMeeting();
-        dbAccess.close();
-
         attendanceProgressValue = 0;
         weekProgressValue = 0;
 
@@ -99,11 +94,24 @@ public class DashboardActivity extends Activity {
 
         graph = (GraphView) findViewById(R.id.progressGraph);
 
+        dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+        meetingItems = dbAccess.getMeeting();
+        dbAccess.close();
+
+        refreshList();
+    }
+
+    private void refreshList(){
+
+        dbAccess = DatabaseAccess.getInstance(this);
+        dbAccess.open();
+        meetingItems = dbAccess.getMeeting();
+        dbAccess.close();
 
         ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, meetingItems);
         meetingList.setAdapter(adapter);
         meetingList.setPadding(0,15,0,20);
-
 
     }
 
@@ -254,5 +262,7 @@ public class DashboardActivity extends Activity {
         refreshAttendanceProgress();
 
         drawChart();
+
+        refreshList();
     }
 }
