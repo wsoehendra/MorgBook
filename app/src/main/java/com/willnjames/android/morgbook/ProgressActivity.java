@@ -308,7 +308,6 @@ public class ProgressActivity extends Activity {
 
     private void populateFields(){
         if(progressList == null){
-            errorText.setText("Please Select a Student");
             return;
         } else if(selectedStudent == null){
             return;
