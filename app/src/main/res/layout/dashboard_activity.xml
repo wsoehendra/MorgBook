@@ -349,9 +349,117 @@
         android:layout_height="200dp"
         android:src="@drawable/rectanglewhite"
         android:id="@+id/assignmentsBG"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/progressBG"
-        android:layout_marginBottom="29dp" />
+        android:layout_alignBottom="@+id/meetingsBG"
+        android:layout_alignStart="@+id/progressBG" />
+
+    <TextView
+        android:text="Due W13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="125dp"
+        android:layout_alignStart="@id/assignmentsBG"
+        android:layout_marginLeft="42dp"
+        android:textSize="30dp"
+        android:textColor="#000000"
+        android:id="@+id/textView12"
+        android:layout_below="@+id/textView10" />
+
+    <TextView
+        android:text="INFS3634 Pair Assignment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_alignStart="@id/assignmentsBG"
+        android:layout_marginLeft="17dp"
+        android:textSize="14dp"
+        android:id="@+id/textView13"
+        android:layout_below="@+id/textView12" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/extracircle"
+        android:layout_below="@+id/textView10"
+        android:layout_alignStart="@+id/assignmentsBG"
+        android:layout_marginLeft="49dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:text="!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="55dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/textView14" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkboxselector"
+        android:layout_below="@+id/reminderLabel"
+        android:layout_alignStart="@+id/remindersBG"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="18dp"
+        android:id="@+id/checkBox" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkboxselector"
+        android:layout_below="@+id/checkBox"
+        android:layout_alignStart="@+id/remindersBG"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="18dp"
+        android:id="@+id/checkBox2" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/checkboxselector"
+        android:checked="true"
+        android:layout_below="@+id/checkBox2"
+        android:layout_alignStart="@+id/remindersBG"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="18dp"
+        android:id="@+id/checkBox3" />
+
+    <TextView
+        android:text="Make Slides"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reminderLabel"
+        android:layout_marginTop="32dp"
+        android:textSize="17dp"
+        android:layout_toEndOf="@+id/checkBox"
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView15" />
+
+    <TextView
+        android:text="Fix Fatal Error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView15"
+        android:layout_marginTop="35dp"
+        android:textSize="17dp"
+        android:layout_toEndOf="@+id/checkBox"
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView16" />
+
+    <TextView
+        android:text="Buy Pretzels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView16"
+        android:layout_marginTop="34dp"
+        android:textSize="17dp"
+        android:layout_toEndOf="@+id/checkBox"
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView17" />
 
 
 </RelativeLayout>

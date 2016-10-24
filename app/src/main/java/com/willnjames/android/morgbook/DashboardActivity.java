@@ -97,11 +97,12 @@ public class DashboardActivity extends Activity {
         attendanceTextCount.setText("0");
         weekTextCount.setText("0");
 
+        graph = (GraphView) findViewById(R.id.progressGraph);
+
 
         ArrayAdapter<Meeting> adapter = new ArrayAdapter<Meeting>(this, android.R.layout.simple_list_item_1, meetingItems);
         meetingList.setAdapter(adapter);
         meetingList.setPadding(0,15,0,20);
-        graph = (GraphView) findViewById(R.id.progressGraph);
 
 
     }
@@ -142,6 +143,8 @@ public class DashboardActivity extends Activity {
 
         startWeekAnimation(weekProgressValue, 13);
     }
+
+
 
     private void setDateText() {
         Calendar c = Calendar.getInstance();
